@@ -1,0 +1,60 @@
+
+<SCRIPT src='ChartNew.js'></script>
+
+
+<SCRIPT>
+
+defCanvasWidth=1200;
+defCanvasHeight=600;
+
+
+var lineChartData = { labels:["Jul 04",
+"", "", "Jul 09",
+"", "", "Jul 14",
+"", "", "Jul 17",
+"", "", "Jul 22",
+"", "", "Jul 25",
+"", ""],
+datasets:[
+  {fillColor:"rgba(243,137,2,1.000000)",
+   strokeColor:"rgba(0,0,0,0.000000)",
+   pointColor:"rgba(0,0,0,0.000000)",
+   pointStrokeColor:"rgba(0,0,0,0.000000)",
+   data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},
+  {fillColor:"rgba(61,155,220,1.000000)",
+   strokeColor:"rgba(0,0,0,0.000000)",
+   pointColor:"rgba(0,0,0,0.000000)",
+   pointStrokeColor:"rgba(0,0,0,0.000000)",
+   data:[0,0,0,0,0,0,0,0,0,0.12,0.11,0.12,0.12,0.37,0.38,0.37,0.52,0.52]}
+   ]
+};
+var options = {animation:false, bezierCurve :false};
+
+
+
+</SCRIPT>
+
+
+<html>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+	<head>
+		<title>test IOS</title>
+	</head>
+	<body>
+  
+  <center>
+    <FONT SIZE=6><B>Demo of ChartNew.js !</B></FONT>    <BR>
+    <script>
+
+      document.write("<canvas id=\"canvas\" height=\""+defCanvasHeight+"\" width=\""+defCanvasWidth+"\"></canvas>");
+      var context = document.getElementById("canvas").getContext("2d");
+
+window.onload = function() {
+
+      var myLine = new Chart(context).Line(lineChartData,options);
+
+}
+
+    </script>
+  </body>
+</html>
