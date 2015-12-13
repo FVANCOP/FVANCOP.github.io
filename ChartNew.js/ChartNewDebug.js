@@ -489,7 +489,9 @@ window.alert("IN TEST REDRAW "+ctx.firstPass);
 
 	if (ctx.firstPass==2 || ctx.firstPass==4 || ctx.firstPass==9) {
 		ctx.firstPass=6;
+window.alert("before subupdatechart "+ctx.firstPass);
 		subUpdateChart(ctx,data,config) ;
+window.alert("after subupdatechart "+ctx.firstPass);
 		return true;
 	} else {
 		ctx.firstPass=5;
@@ -534,7 +536,9 @@ function subUpdateChart(ctx,data,config) {
 	// ctx.firstPass==5 => chart is displayed ; 
 	// ctx.firstPass==6 => chart is displayed but need to be redraw without animation (because of a resize);
 	// ctx.firstPass==7 => chart is displayed but need to be redraw without responsivity;
+window.alert("IN SUBUPDATECHART A");
 	if(!dynamicFunction(data, config, ctx)) { return; }
+window.alert("IN SUBUPDATECHART B");
 	var newSize;
 	if(typeof ctx.firstPass == "undefined") { 
 		ctx.firstPass=1;
@@ -562,6 +566,7 @@ function subUpdateChart(ctx,data,config) {
 		}
 		redrawGraph(ctx,data,config);
 	} else if(ctx.firstPass==1 || ctx.firstPass==2) {
+window.alert("IN SUBUPDATECHART C");
 		ctx.firstPass=2;
 	} else if (ctx.firstPass==3 || ctx.firstPass==4) {
 		ctx.firstPass=4;
@@ -597,6 +602,9 @@ function subUpdateChart(ctx,data,config) {
 		}
 		redrawGraph(ctx,data,config);
 	} 
+window.alert("IN SUBUPDATECHART D");
+
+	
 };
 
 function redrawGraph(ctx,data,config) {
