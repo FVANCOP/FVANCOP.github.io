@@ -1,3 +1,5 @@
+
+window.alert("ChartNewDebug V2");
 /*              
  * ChartNew.js  
  *                                                                                   
@@ -4772,8 +4774,9 @@ window.alert("Animation Complete 1");
 					}
 					window.setTimeout(animLoop, config.animationPauseTime*1000);
 				} else {
+window.alert("Animation Complete 2A");
 					if(!testRedraw(ctx,data,config) ) {
-window.alert("Animation Complete 2");
+window.alert("Animation Complete 2B");
 						if (typeof config.onAnimationComplete == "function" && ctx.runanimationcompletefunction==true) {
 							config.onAnimationComplete(ctx, config, data, 1, animationCount + 1);
 							ctx.runanimationcompletefunction=false;
