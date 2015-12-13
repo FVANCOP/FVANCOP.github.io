@@ -4753,6 +4753,7 @@ window.Chart = function(context) {
 			animateFrame();
 			//Stop the loop continuing forever
 			if (multAnim == -1 && cntiter <= beginAnim) {
+window.alert("Animation Complete 1");
 				if (typeof config.onAnimationComplete == "function" && ctx.runanimationcompletefunction==true) config.onAnimationComplete(ctx, config, data, 0, animationCount + 1);
 				multAnim = 1;
 				requestAnimFrame(animLoop);
@@ -4772,6 +4773,7 @@ window.Chart = function(context) {
 					window.setTimeout(animLoop, config.animationPauseTime*1000);
 				} else {
 					if(!testRedraw(ctx,data,config) ) {
+window.alert("Animation Complete 2");
 						if (typeof config.onAnimationComplete == "function" && ctx.runanimationcompletefunction==true) {
 							config.onAnimationComplete(ctx, config, data, 1, animationCount + 1);
 							ctx.runanimationcompletefunction=false;
