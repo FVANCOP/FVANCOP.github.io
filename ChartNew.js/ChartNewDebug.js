@@ -484,6 +484,9 @@ function chartJsResize() {
 };
 
 function testRedraw(ctx,data,config) {
+
+window.alert("IN TEST REDRAW "+ctx.firstPass);
+
 	if (ctx.firstPass==2 || ctx.firstPass==4 || ctx.firstPass==9) {
 		ctx.firstPass=6;
 		subUpdateChart(ctx,data,config) ;
