@@ -479,6 +479,7 @@ function chartJsResize() {
 		if(typeof jsGraphResize[i][2].firstPass != "undefined") {
 			if(jsGraphResize[i][2].firstPass == 5)jsGraphResize[i][2].firstPass=6;
 		}
+window.alert("CALL SUBUPDATECHART:A");
 		subUpdateChart(jsGraphResize[i][2],jsGraphResize[i][3],jsGraphResize[i][4]);
 	}
 };
@@ -489,6 +490,8 @@ window.alert("IN TEST REDRAW "+ctx.firstPass);
 
 	if (ctx.firstPass==2 || ctx.firstPass==4 || ctx.firstPass==9) {
 		ctx.firstPass=6;
+window.alert("CALL SUBUPDATECHART:B");
+
 window.alert("before subupdatechart "+ctx.firstPass);
 		subUpdateChart(ctx,data,config) ;
 window.alert("after subupdatechart "+ctx.firstPass);
@@ -521,6 +524,8 @@ function updateChart(ctx,data,config,animation,runanimationcompletefunction) {
 			}
 			
 		}
+window.alert("CALL SUBUPDATECHART:C");
+
 		subUpdateChart(ctx,data,config) ;
 		
 	}
@@ -2072,6 +2077,7 @@ window.Chart = function(context) {
         	if(config.responsive && typeof ctx.firstPass == "undefined") {
         		if(!config.multiGraph) {
 				addResponsiveChart(ctx.ChartNewId,ctx,data,config);
+window.alert("CALL SUBUPDATECHART:D");
         			subUpdateChart(ctx,data,config);
         			return false;
         		} else { ctx.firstPass=1; }
