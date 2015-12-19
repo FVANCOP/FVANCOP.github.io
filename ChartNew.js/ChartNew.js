@@ -478,13 +478,18 @@ function chartJsResize() {
 			if(jsGraphResize[i][2].firstPass == 5)jsGraphResize[i][2].firstPass=6;
 		}
 		subUpdateChart(jsGraphResize[i][2],jsGraphResize[i][3],jsGraphResize[i][4]);
+		if(typeof jsGraphResize[i][2].firstPass != "undefined") {
+			if(jsGraphResize[i][2].firstPass == 6)jsGraphResize[i][2].firstPass=5;
+		}
 	}
 };
 
 function testRedraw(ctx,data,config) {
 	if (ctx.firstPass==2 || ctx.firstPass==4 || ctx.firstPass==9) {
+		var originalfirstpass=ctx.firstPass;
 		ctx.firstPass=6;
 		subUpdateChart(ctx,data,config) ;
+		ctx.firstPass=originalfirstpass;
 		return true;
 	} else {
 		ctx.firstPass=5;
@@ -529,7 +534,6 @@ function subUpdateChart(ctx,data,config) {
 	// ctx.firstPass==5 => chart is displayed ; 
 	// ctx.firstPass==6 => chart is displayed but need to be redraw without animation (because of a resize);
 	// ctx.firstPass==7 => chart is displayed but need to be redraw without responsivity;
-
 	if(!dynamicFunction(data, config, ctx)) { return; }
 	var newSize;
 	if(typeof ctx.firstPass == "undefined") { 
@@ -593,7 +597,6 @@ function subUpdateChart(ctx,data,config) {
 		}
 		redrawGraph(ctx,data,config);
 	} 
-
 };
 
 function redrawGraph(ctx,data,config) {
@@ -1726,6 +1729,7 @@ window.Chart = function(context) {
 		multiGraph: false,
 		clearRect: true, // do not change clearRect options; for internal use only
 		dynamicDisplay: false,
+		animationForceSetTimeOut : false,
 		graphSpaceBefore: 5,
 		graphSpaceAfter: 5,
 		canvasBorders: false,
@@ -4720,8 +4724,10 @@ window.Chart = function(context) {
 		var beginAnim = cntiter;
 		var beginAnimPct = percentAnimComplete;
 		if (typeof drawScale !== "function") drawScale = function() {};
-		if (config.clearRect) requestAnimFrame(animLoop);
-		else animLoop();
+		if (config.clearRect) {
+			if(config.animationForceSetTimeOut)requestAnimFrameSetTimeOut(animLoop);
+			else requestAnimFrame(animLoop);
+		} else animLoop();
 
 		function animateFrame() {
 			var easeAdjustedAnimationPercent = (config.animation) ? CapValue(easingFunction(percentAnimComplete), null, 0) : 1;
@@ -4757,9 +4763,11 @@ window.Chart = function(context) {
 			if (multAnim == -1 && cntiter <= beginAnim) {
 				if (typeof config.onAnimationComplete == "function" && ctx.runanimationcompletefunction==true) config.onAnimationComplete(ctx, config, data, 0, animationCount + 1);
 				multAnim = 1;
-				requestAnimFrame(animLoop);
+				if(config.animationForceSetTimeOut)requestAnimFrameSetTimeOut(animLoop);
+				else requestAnimFrame(animLoop);
 			} else if (percentAnimComplete < config.animationStopValue) {
-				requestAnimFrame(animLoop);
+				if(config.animationForceSetTimeOut)requestAnimFrameSetTimeOut(animLoop);
+				else requestAnimFrame(animLoop);
 			} else {
 				if ((animationCount < config.animationCount || config.animationCount == 0) && (ctx.firstPass ==1 || ctx.firstPass!=2)) {
 					animationCount++;
@@ -4773,7 +4781,8 @@ window.Chart = function(context) {
 					}
 					window.setTimeout(animLoop, config.animationPauseTime*1000);
 				} else {
-					if(!testRedraw(ctx,data,config) ) {
+					testRedraw(ctx,data,config);
+					if(ctx.firstPass!=6) {
 						if (typeof config.onAnimationComplete == "function" && ctx.runanimationcompletefunction==true) {
 							config.onAnimationComplete(ctx, config, data, 1, animationCount + 1);
 							ctx.runanimationcompletefunction=false;
@@ -4796,6 +4805,10 @@ window.Chart = function(context) {
 				window.setTimeout(callback, 1000 / 60);
 			};
 	})();
+	var requestAnimFrameSetTimeOut = (function() {
+		return	function(callback) { window.setTimeout(callback, 1000 / 60); };
+	})();
+
 
 	function calculateScale(axis, config, maxSteps, minSteps, maxValue, minValue, labelTemplateString) {
 		var graphMin, graphMax, graphRange, stepValue, numberOfSteps, valueRange, rangeOrderOfMagnitude, decimalNum;
