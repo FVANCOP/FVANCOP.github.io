@@ -22,7 +22,7 @@ var demo_common_options = {
 
 	legend : true,
 	inGraphDataShow : true,
-	responsive : false
+	responsive : true
 
 };
 
