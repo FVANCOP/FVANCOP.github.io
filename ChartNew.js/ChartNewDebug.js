@@ -475,6 +475,7 @@ function resizeGraph(ctx,config) {
 
 
 function chartJsResize() {
+window.alert("from chartJsResize");
 	for (var i=0;i<jsGraphResize.length;i++)  {
 		if(typeof jsGraphResize[i][2].firstPass != "undefined") {
 			if(jsGraphResize[i][2].firstPass == 5)jsGraphResize[i][2].firstPass=6;
@@ -485,9 +486,9 @@ function chartJsResize() {
 
 function testRedraw(ctx,data,config) {
 
-
 	if (ctx.firstPass==2 || ctx.firstPass==4 || ctx.firstPass==9) {
 		ctx.firstPass=6;
+window.alert("from test Redraw");
 		subUpdateChart(ctx,data,config) ;
 		return true;
 	} else {
@@ -518,7 +519,10 @@ function updateChart(ctx,data,config,animation,runanimationcompletefunction) {
 			}
 			
 		}
+window.alert("from updateChart");
+
 		subUpdateChart(ctx,data,config) ;
+	
 		
 	}
 };
@@ -2066,6 +2070,8 @@ window.Chart = function(context) {
         	if(config.responsive && typeof ctx.firstPass == "undefined") {
         		if(!config.multiGraph) {
 				addResponsiveChart(ctx.ChartNewId,ctx,data,config);
+window.alert("from init");
+
         			subUpdateChart(ctx,data,config);
         			return false;
         		} else { ctx.firstPass=1; }
