@@ -475,8 +475,8 @@ function resizeGraph(ctx,config) {
 
 
 function chartJsResize() {
-window.alert("from chartJsResize");
 	for (var i=0;i<jsGraphResize.length;i++)  {
+window.alert("from chartJsResize" + jsGraphResize[i][2].firstPass);
 		if(typeof jsGraphResize[i][2].firstPass != "undefined") {
 			if(jsGraphResize[i][2].firstPass == 5)jsGraphResize[i][2].firstPass=6;
 		}
