@@ -4777,9 +4777,7 @@ window.Chart = function(context) {
 					}
 					window.setTimeout(animLoop, config.animationPauseTime*1000);
 				} else {
-			window.alert("before test redraw"+ctx.firstPass);
 					if(!testRedraw(ctx,data,config) ) {
-			window.alert("after test redraw"+ctx.firstPass);
 						if (typeof config.onAnimationComplete == "function" && ctx.runanimationcompletefunction==true) {
 							config.onAnimationComplete(ctx, config, data, 1, animationCount + 1);
 							ctx.runanimationcompletefunction=false;
