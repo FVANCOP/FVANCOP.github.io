@@ -1,5 +1,5 @@
 
-window.alert("ChartNewDebug V2");
+
 /*              
  * ChartNew.js  
  *                                                                                   
@@ -479,22 +479,16 @@ function chartJsResize() {
 		if(typeof jsGraphResize[i][2].firstPass != "undefined") {
 			if(jsGraphResize[i][2].firstPass == 5)jsGraphResize[i][2].firstPass=6;
 		}
-window.alert("CALL SUBUPDATECHART:A");
 		subUpdateChart(jsGraphResize[i][2],jsGraphResize[i][3],jsGraphResize[i][4]);
 	}
 };
 
 function testRedraw(ctx,data,config) {
 
-window.alert("IN TEST REDRAW "+ctx.firstPass);
 
 	if (ctx.firstPass==2 || ctx.firstPass==4 || ctx.firstPass==9) {
 		ctx.firstPass=6;
-window.alert("CALL SUBUPDATECHART:B");
-
-window.alert("before subupdatechart "+ctx.firstPass);
 		subUpdateChart(ctx,data,config) ;
-window.alert("after subupdatechart "+ctx.firstPass);
 		return true;
 	} else {
 		ctx.firstPass=5;
@@ -524,8 +518,6 @@ function updateChart(ctx,data,config,animation,runanimationcompletefunction) {
 			}
 			
 		}
-window.alert("CALL SUBUPDATECHART:C");
-
 		subUpdateChart(ctx,data,config) ;
 		
 	}
@@ -541,9 +533,7 @@ function subUpdateChart(ctx,data,config) {
 	// ctx.firstPass==5 => chart is displayed ; 
 	// ctx.firstPass==6 => chart is displayed but need to be redraw without animation (because of a resize);
 	// ctx.firstPass==7 => chart is displayed but need to be redraw without responsivity;
-window.alert("IN SUBUPDATECHART A"+ctx.firstPass);
 	if(!dynamicFunction(data, config, ctx)) { return; }
-window.alert("IN SUBUPDATECHART B");
 	var newSize;
 	if(typeof ctx.firstPass == "undefined") { 
 		ctx.firstPass=1;
@@ -558,7 +548,6 @@ window.alert("IN SUBUPDATECHART B");
 		}
 		ctx.runanimationcompletefunction=true;
 		redrawGraph(ctx,data,config);
-window.alert("CTXFIRSTPASS:"+ctx.firstPass);
 	} else if(ctx.firstPass == 0) { 
 		ctx.firstPass=1;
 		newSize=resizeGraph(ctx,config);
@@ -572,7 +561,6 @@ window.alert("CTXFIRSTPASS:"+ctx.firstPass);
 		}
 		redrawGraph(ctx,data,config);
 	} else if(ctx.firstPass==1 || ctx.firstPass==2) {
-window.alert("IN SUBUPDATECHART C");
 		ctx.firstPass=2;
 	} else if (ctx.firstPass==3 || ctx.firstPass==4) {
 		ctx.firstPass=4;
@@ -608,7 +596,6 @@ window.alert("IN SUBUPDATECHART C");
 		}
 		redrawGraph(ctx,data,config);
 	} 
-window.alert("IN SUBUPDATECHART D"+ctx.firstPass);
 
 	
 };
@@ -2077,7 +2064,6 @@ window.Chart = function(context) {
         	if(config.responsive && typeof ctx.firstPass == "undefined") {
         		if(!config.multiGraph) {
 				addResponsiveChart(ctx.ChartNewId,ctx,data,config);
-window.alert("CALL SUBUPDATECHART:D");
         			subUpdateChart(ctx,data,config);
         			return false;
         		} else { ctx.firstPass=1; }
@@ -4773,7 +4759,6 @@ window.alert("CALL SUBUPDATECHART:D");
 			animateFrame();
 			//Stop the loop continuing forever
 			if (multAnim == -1 && cntiter <= beginAnim) {
-window.alert("Animation Complete 1");
 				if (typeof config.onAnimationComplete == "function" && ctx.runanimationcompletefunction==true) config.onAnimationComplete(ctx, config, data, 0, animationCount + 1);
 				multAnim = 1;
 				requestAnimFrame(animLoop);
@@ -4792,9 +4777,7 @@ window.alert("Animation Complete 1");
 					}
 					window.setTimeout(animLoop, config.animationPauseTime*1000);
 				} else {
-window.alert("Animation Complete 2A");
 					if(!testRedraw(ctx,data,config) ) {
-window.alert("Animation Complete 2B");
 						if (typeof config.onAnimationComplete == "function" && ctx.runanimationcompletefunction==true) {
 							config.onAnimationComplete(ctx, config, data, 1, animationCount + 1);
 							ctx.runanimationcompletefunction=false;
