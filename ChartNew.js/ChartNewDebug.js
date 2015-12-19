@@ -487,9 +487,11 @@ window.alert("from chartJsResize" + jsGraphResize[i][2].firstPass);
 function testRedraw(ctx,data,config) {
 
 	if (ctx.firstPass==2 || ctx.firstPass==4 || ctx.firstPass==9) {
+		var originalfirstpass=ctx.firstPass;
 		ctx.firstPass=6;
 window.alert("from test Redraw");
 		subUpdateChart(ctx,data,config) ;
+		ctx.firstPass=originalfirstpass;
 		return true;
 	} else {
 		ctx.firstPass=5;
