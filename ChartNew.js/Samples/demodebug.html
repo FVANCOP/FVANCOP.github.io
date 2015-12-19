@@ -112,6 +112,9 @@ lstchart[lstchart.length]=[0,"Radar","mydata1P","opts_mydata1P",'{ graphTitle:"R
     } else i=dispgraph;
     
     window.alert(document.getElementById("canvas").getContext("2d").canvas.width);
+
+    document.getElementById("canvas").getContext("2d").canvas.height=defCanvasHeight;
+    document.getElementById("canvas").getContext("2d").canvas.width=defCanvasWidth;
     
     document.getElementById("canvas").getContext("2d").firstPass=undefined;
     document.getElementById("canvas").getContext("2d").runanimationcompletefunction=true;
