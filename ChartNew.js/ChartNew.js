@@ -529,6 +529,7 @@ function subUpdateChart(ctx,data,config) {
 	// ctx.firstPass==5 => chart is displayed ; 
 	// ctx.firstPass==6 => chart is displayed but need to be redraw without animation (because of a resize);
 	// ctx.firstPass==7 => chart is displayed but need to be redraw without responsivity;
+
 	if(!dynamicFunction(data, config, ctx)) { return; }
 	var newSize;
 	if(typeof ctx.firstPass == "undefined") { 
@@ -592,6 +593,8 @@ function subUpdateChart(ctx,data,config) {
 		}
 		redrawGraph(ctx,data,config);
 	} 
+window.alert("At End of subUpdateChart : "+ctx.firstPass);
+	
 };
 
 function redrawGraph(ctx,data,config) {
