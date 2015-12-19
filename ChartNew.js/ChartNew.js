@@ -593,8 +593,7 @@ function subUpdateChart(ctx,data,config) {
 		}
 		redrawGraph(ctx,data,config);
 	} 
-window.alert("At End of subUpdateChart : "+ctx.firstPass);
-	
+
 };
 
 function redrawGraph(ctx,data,config) {
