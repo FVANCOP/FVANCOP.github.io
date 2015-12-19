@@ -481,6 +481,9 @@ window.alert("from chartJsResize" + jsGraphResize[i][2].firstPass);
 			if(jsGraphResize[i][2].firstPass == 5)jsGraphResize[i][2].firstPass=6;
 		}
 		subUpdateChart(jsGraphResize[i][2],jsGraphResize[i][3],jsGraphResize[i][4]);
+		if(typeof jsGraphResize[i][2].firstPass != "undefined") {
+			if(jsGraphResize[i][2].firstPass == 6)jsGraphResize[i][2].firstPass=5;
+		}
 	}
 };
 
@@ -4787,7 +4790,8 @@ window.alert("from init");
 					}
 					window.setTimeout(animLoop, config.animationPauseTime*1000);
 				} else {
-					if(!testRedraw(ctx,data,config) ) {
+					testRedraw(ctx,data,config);
+					if(ctx.firstPass!=6) {
 						if (typeof config.onAnimationComplete == "function" && ctx.runanimationcompletefunction==true) {
 							config.onAnimationComplete(ctx, config, data, 1, animationCount + 1);
 							ctx.runanimationcompletefunction=false;
