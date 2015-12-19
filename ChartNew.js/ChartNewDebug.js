@@ -489,9 +489,9 @@ function testRedraw(ctx,data,config) {
 	if (ctx.firstPass==2 || ctx.firstPass==4 || ctx.firstPass==9) {
 		var originalfirstpass=ctx.firstPass;
 		ctx.firstPass=6;
-window.alert("from test Redraw");
 		subUpdateChart(ctx,data,config) ;
 		ctx.firstPass=originalfirstpass;
+window.alert("from test Redraw"+ctx.firstPass);
 		return true;
 	} else {
 		ctx.firstPass=5;
