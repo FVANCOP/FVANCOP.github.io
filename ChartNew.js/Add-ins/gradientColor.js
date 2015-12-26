@@ -6,6 +6,7 @@
 // Change 2 : Vancoppenolle François - generalized for all graph types
 //
 
+
 function gradientColor(area,ctx,data,statData,posi,posj,othervars) {
 	// v0 = left xAxis of rectangle or xAxis of center
 	// v1 = top yAxis of rectangle or yAxis of center
