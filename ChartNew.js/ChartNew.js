@@ -740,7 +740,6 @@ var dynamicDisplay = new Array();
 var dynamicDisplayList = new Array();
 
 function dynamicFunction(data, config, ctx) {
-
 	if (isIE() < 9 && isIE() != false) return(true);
 
 
@@ -769,24 +768,38 @@ function dynamicFunction(data, config, ctx) {
 function isScrolledIntoView(element) {
 	var xPosition = 0;
 	var yPosition = 0;
+	var eltWidth, eltHeight;
+	if (window.devicePixelRatio) {
+		eltWidth=element.width/window.devicePixelRatio;
+		eltHeight=element.height/window.devicePixelRatio;
+	} else {
+		eltWidth=element.width;
+		eltHeight=element.height;
+	}
 	elem = element;
 	while (elem) {
 		xPosition += (elem.offsetLeft - elem.scrollLeft + elem.clientLeft);
 		yPosition += (elem.offsetTop - elem.scrollTop + elem.clientTop);
 		elem = elem.offsetParent;
 	}
-	if (xPosition + element.width / 2 >= window.pageXOffset &&
-		xPosition + element.width / 2 <= window.pageXOffset + window.innerWidth &&
-		yPosition + element.height / 2 >= window.pageYOffset &&
-		yPosition + element.height / 2 <= window.pageYOffset + window.innerHeight
-	) return (true);
-	else return false;
+
+	if (xPosition + (eltWidth / 2) >= window.pageXOffset &&
+		xPosition + (eltWidth / 2) <= window.pageXOffset + window.innerWidth &&
+		yPosition + (eltHeight / 2) >= window.pageYOffset &&
+		yPosition + (eltHeight / 2) <= window.pageYOffset + window.innerHeight
+	) {
+		return (true);
+	}
+	else {
+		return false;
+	}
 };
 
 function scrollFunction() {
 	for (var i = 0; i < dynamicDisplayList["length"]; i++) {
 		if (isScrolledIntoView(dynamicDisplay[dynamicDisplayList[i]][5]) && dynamicDisplay[dynamicDisplayList[i]][2] == false) {
 			dynamicDisplay[dynamicDisplayList[i]][1] = true;
+			dynamicDisplay[dynamicDisplayList[i]][2] = true;
 			redrawGraph(dynamicDisplay[dynamicDisplayList[i]][0],dynamicDisplay[dynamicDisplayList[i]][3], dynamicDisplay[dynamicDisplayList[i]][4]);
 		}
 	}
@@ -3585,7 +3598,6 @@ window.Chart = function(context) {
 
 		ctx.tpchart="HorizontalStackedBar";
 		ctx.tpdata=0;
-
 	        if (!init_and_start(ctx,data,config)) return;
 		var statData=initPassVariableData_part1(data,config,ctx);
 
