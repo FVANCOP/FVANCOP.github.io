@@ -752,7 +752,7 @@ function dynamicFunction(data, config, ctx) {
 		if (typeof(dynamicDisplay[ctx.canvas.id]) == "undefined") {
 			dynamicDisplayList[dynamicDisplayList["length"]] = ctx.canvas.id;
 			dynamicDisplay[ctx.canvas.id] = [ctx, false, false, data, config, ctx.canvas];
-			dynamicDisplay[ctx.canvas.id][1] = isScrolledIntoView(ctx.canvas);
+			dynamicDisplay[ctx.canvas.id][1] = isScrolledIntoView(ctx.canvas,config);
 			window.onscroll = scrollFunction;
 		} else if (dynamicDisplay[ctx.canvas.id][2] == false) {
 			dynamicDisplay[ctx.canvas.id][1] = isScrolledIntoView(ctx.canvas);
@@ -765,7 +765,7 @@ function dynamicFunction(data, config, ctx) {
 	return true;
 };
 
-function isScrolledIntoView(element) {
+function isScrolledIntoView(element,config) {
 	var xPosition = 0;
 	var yPosition = 0;
 	var eltWidth, eltHeight;
@@ -783,11 +783,13 @@ function isScrolledIntoView(element) {
 		elem = elem.offsetParent;
 	}
 
-	if (xPosition + (eltWidth / 2) >= window.pageXOffset &&
-		xPosition + (eltWidth / 2) <= window.pageXOffset + window.innerWidth &&
-		yPosition + (eltHeight / 2) >= window.pageYOffset &&
-		yPosition + (eltHeight / 2) <= window.pageYOffset + window.innerHeight
+
+	if (xPosition + (eltWidth * config.dynamicDisplayXPartOfChart) >= window.pageXOffset &&
+		xPosition + (eltWidth * config.dynamicDisplayXPartOfChart) <= window.pageXOffset + window.innerWidth &&
+		yPosition + (eltHeight * config.dynamicDisplayYPartOfChart) >= window.pageYOffset &&
+		yPosition + (eltHeight * config.dynamicDisplayYPartOfChart) <= window.pageYOffset + window.innerHeight
 	) {
+//		window.alert("return TRUE !!!");
 		return (true);
 	}
 	else {
@@ -797,7 +799,7 @@ function isScrolledIntoView(element) {
 
 function scrollFunction() {
 	for (var i = 0; i < dynamicDisplayList["length"]; i++) {
-		if (isScrolledIntoView(dynamicDisplay[dynamicDisplayList[i]][5]) && dynamicDisplay[dynamicDisplayList[i]][2] == false) {
+		if (isScrolledIntoView(dynamicDisplay[dynamicDisplayList[i]][5],dynamicDisplay[dynamicDisplayList[i]][4]) && dynamicDisplay[dynamicDisplayList[i]][2] == false) {
 			dynamicDisplay[dynamicDisplayList[i]][1] = true;
 			dynamicDisplay[dynamicDisplayList[i]][2] = true;
 			redrawGraph(dynamicDisplay[dynamicDisplayList[i]][0],dynamicDisplay[dynamicDisplayList[i]][3], dynamicDisplay[dynamicDisplayList[i]][4]);
@@ -1742,6 +1744,8 @@ window.Chart = function(context) {
 		multiGraph: false,
 		clearRect: true, // do not change clearRect options; for internal use only
 		dynamicDisplay: false,
+		dynamicDisplayXPartOfChart : 0.5,
+		dynamicDisplayYPartOfChart : 0.5,
 		animationForceSetTimeOut : false,
 		graphSpaceBefore: 5,
 		graphSpaceAfter: 5,
