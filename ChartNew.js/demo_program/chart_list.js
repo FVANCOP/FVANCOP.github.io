@@ -94,3 +94,4 @@ lst[lst.length]=["UpdateChart.html","../Samples/UpdateChart.html","50.Varia Upda
 lst[lst.length]=["ZERO Line","../Samples/xAxisScale.html","05.Lines line zero drawXScaleLine","","If you want to display a line at the ZERO position on the y Scale, it is possible. To produce this, use the drawXScaleLine option."];
 lst[lst.length]=["issue 396","../Samples/issue396.html","05.Lines line function color point ","","Solution for issue 396 - Two charts are displayed; When you click on a point in the first chart, the corresponding point on the second chart is highlighted."];
 lst[lst.length]=["Original Samples","../Samples/original_sample.html","50.Varia samples ","","This is the sample program that was initialy provided with ChartNew.js"];
+lst[lst.length]=["Debug","../Samples/original_sample_debug.html","99.Debug ","","Debug"];
