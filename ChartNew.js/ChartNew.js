@@ -788,8 +788,10 @@ function isScrolledIntoView(element,config) {
 	eltHeight=element.recomputedHeight;
 	elem = element;
 	while (elem) {
-		xPosition += (elem.offsetLeft - elem.scrollLeft + elem.clientLeft);
-		yPosition += (elem.offsetTop - elem.scrollTop + elem.clientTop);
+//		xPosition += (elem.offsetLeft - elem.scrollLeft + elem.clientLeft);
+		xPosition += (elem.offsetLeft + elem.clientLeft);
+//		yPosition += (elem.offsetTop - elem.scrollTop + elem.clientTop);
+		yPosition += (elem.offsetTop + elem.clientTop);
 		elem = elem.offsetParent;
 	}
 var midXpos=xPosition + (eltWidth * config.dynamicDisplayXPartOfChart);
