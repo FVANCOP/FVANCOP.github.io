@@ -740,7 +740,7 @@ var dynamicDisplay = new Array();
 var dynamicDisplayList = new Array();
 
 function dynamicFunction(data, config, ctx) {
-
+console.log("IN DYNAMICFUNCTION");
 	if (isIE() < 9 && isIE() != false) return(true);
 
 
@@ -753,7 +753,7 @@ function dynamicFunction(data, config, ctx) {
 		if (typeof(dynamicDisplay[ctx.canvas.id]) == "undefined") {
 			dynamicDisplayList[dynamicDisplayList["length"]] = ctx.canvas.id;
 			dynamicDisplay[ctx.canvas.id] = [ctx, false, false, data, config, ctx.canvas];
-			dynamicDisplay[ctx.canvas.id][1] = isScrolledIntoView(ctx.canvas);
+			dynamicDisplay[ctx.canvas.id][1] = isScrolledIntoView(ctx.canvas,config);
 			window.onscroll = scrollFunction;
 		} else if (dynamicDisplay[ctx.canvas.id][2] == false) {
 			dynamicDisplay[ctx.canvas.id][1] = isScrolledIntoView(ctx.canvas);
@@ -761,32 +761,79 @@ function dynamicFunction(data, config, ctx) {
 		if (dynamicDisplay[ctx.canvas.id][1] == false && dynamicDisplay[ctx.canvas.id][2] == false) {
 			return false;
 		}
+console.log("Change to TRUE !");
 		dynamicDisplay[ctx.canvas.id][2] = true;
 	}
 	return true;
 };
 
-function isScrolledIntoView(element) {
+function isScrolledIntoView(element,config) {
 	var xPosition = 0;
 	var yPosition = 0;
+	var eltWidth, eltHeight;
+	if(typeof element.recomputedHeight=="undefined") {
+		if (window.devicePixelRatio) {
+			// 31/12/2015 - On retina display, the size of the canvas changes after the canvas is displayed.
+			//              before it is displayd, the size on the screen is the size on non retina display;
+                        //              If we do not divide the height & width by the devicePixelRatio, and if the
+                        //              value of config.dynamicDisplayYPartOfChart and if there is a chart on to bottom of the
+                        //              web page, this chart will never be displayed....
+                        //              If the Size of the canvas was directly the real size displayed on the web page, we should not
+                        //              divide the height/width by the devicePixelRatio.... (Bug in Brosers ?)
+			element.recomputedHeight=element.height/window.devicePixelRatio;
+			element.recomputedWidth=element.width/window.devicePixelRatio;
+		} else {
+			element.recomputedHeight=element.height;
+			element.recomputedWidth=element.width;
+		}
+	}
+	eltWidth=element.recomputedWidth;
+	eltHeight=element.recomputedHeight;
 	elem = element;
 	while (elem) {
-		xPosition += (elem.offsetLeft - elem.scrollLeft + elem.clientLeft);
-		yPosition += (elem.offsetTop - elem.scrollTop + elem.clientTop);
+console.log("IN LOOP")
+//		xPosition += (elem.offsetLeft - elem.scrollLeft + elem.clientLeft);
+		xPosition += (elem.offsetLeft + elem.clientLeft);
+//		yPosition += (elem.offsetTop - elem.scrollTop + elem.clientTop);
+		yPosition += (elem.offsetTop + elem.clientTop);
+console.log("OFFSET :"+window.devicePixelRatio+" "+eltHeight+" " + elem.offsetTop +" "+ elem.scrollTop + " "+ elem.clientTop);
 		elem = elem.offsetParent;
 	}
-	if (xPosition + element.width / 2 >= window.pageXOffset &&
-		xPosition + element.width / 2 <= window.pageXOffset + window.innerWidth &&
-		yPosition + element.height / 2 >= window.pageYOffset &&
-		yPosition + element.height / 2 <= window.pageYOffset + window.innerHeight
-	) return (true);
-	else return false;
+var midXpos=xPosition + (eltWidth * config.dynamicDisplayXPartOfChart);
+var offsetX=window.pageXOffset + window.innerWidth;
+var midYpos=yPosition + (eltHeight * config.dynamicDisplayYPartOfChart);
+var offsetY=window.pageYOffset + window.innerHeight;
+var v1=0;
+var v2=0;
+var v3=0;
+var v4=0;
+if (xPosition + (eltWidth * config.dynamicDisplayXPartOfChart) >= window.pageXOffset)v1=1;
+if (xPosition + (eltWidth * config.dynamicDisplayXPartOfChart) <= window.pageXOffset + window.innerWidth)v2=1;
+if (yPosition + (eltHeight * config.dynamicDisplayYPartOfChart) >= window.pageYOffset)v3=1;
+if (yPosition + (eltHeight * config.dynamicDisplayYPartOfChart) <= window.pageYOffset + window.innerHeight)v4=1;
+
+
+console.log(window.pageYOffset+" "+midYpos+" "+offsetY+" "+window.innerHeight+"//"+window.pageXOffset+" "+midXpos+" "+offsetX+" "+window.innerWidth+"/"+v1+v2+v3+v4);
+	if (xPosition + (eltWidth * config.dynamicDisplayXPartOfChart) >= window.pageXOffset &&
+		xPosition + (eltWidth * config.dynamicDisplayXPartOfChart) <= window.pageXOffset + window.innerWidth &&
+		yPosition + (eltHeight * config.dynamicDisplayYPartOfChart) >= window.pageYOffset &&
+		yPosition + (eltHeight * config.dynamicDisplayYPartOfChart) <= window.pageYOffset + window.innerHeight
+	) {
+console.log("return true");
+//		window.alert("return TRUE !!!");
+		return (true);
+	}
+	else {
+console.log("return false");
+		return false;
+	}
 };
 
 function scrollFunction() {
 	for (var i = 0; i < dynamicDisplayList["length"]; i++) {
-		if (isScrolledIntoView(dynamicDisplay[dynamicDisplayList[i]][5]) && dynamicDisplay[dynamicDisplayList[i]][2] == false) {
+		if (isScrolledIntoView(dynamicDisplay[dynamicDisplayList[i]][5],dynamicDisplay[dynamicDisplayList[i]][4]) && dynamicDisplay[dynamicDisplayList[i]][2] == false) {
 			dynamicDisplay[dynamicDisplayList[i]][1] = true;
+			dynamicDisplay[dynamicDisplayList[i]][2] = true;
 			redrawGraph(dynamicDisplay[dynamicDisplayList[i]][0],dynamicDisplay[dynamicDisplayList[i]][3], dynamicDisplay[dynamicDisplayList[i]][4]);
 		}
 	}
@@ -1729,6 +1776,8 @@ window.Chart = function(context) {
 		multiGraph: false,
 		clearRect: true, // do not change clearRect options; for internal use only
 		dynamicDisplay: false,
+		dynamicDisplayXPartOfChart : 0.5,
+		dynamicDisplayYPartOfChart : 0.5,
 		animationForceSetTimeOut : false,
 		graphSpaceBefore: 5,
 		graphSpaceAfter: 5,
@@ -3585,8 +3634,9 @@ window.Chart = function(context) {
 
 		ctx.tpchart="HorizontalStackedBar";
 		ctx.tpdata=0;
-
+console.log("BEFORE INIT_AND_START");
 	        if (!init_and_start(ctx,data,config)) return;
+console.log("INIT_AND_START_OK");
 		var statData=initPassVariableData_part1(data,config,ctx);
 
 		config.logarithmic = false;
