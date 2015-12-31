@@ -740,7 +740,7 @@ var dynamicDisplay = new Array();
 var dynamicDisplayList = new Array();
 
 function dynamicFunction(data, config, ctx) {
-console.log("IN DYNAMICFUNCTION");
+window.alert("IN DYNAMICFUNCTION");
 	if (isIE() < 9 && isIE() != false) return(true);
 
 
@@ -761,7 +761,7 @@ console.log("IN DYNAMICFUNCTION");
 		if (dynamicDisplay[ctx.canvas.id][1] == false && dynamicDisplay[ctx.canvas.id][2] == false) {
 			return false;
 		}
-console.log("Change to TRUE !");
+window.alert("Change to TRUE !");
 		dynamicDisplay[ctx.canvas.id][2] = true;
 	}
 	return true;
@@ -791,12 +791,12 @@ function isScrolledIntoView(element,config) {
 	eltHeight=element.recomputedHeight;
 	elem = element;
 	while (elem) {
-console.log("IN LOOP")
+window.alert("IN LOOP")
 //		xPosition += (elem.offsetLeft - elem.scrollLeft + elem.clientLeft);
 		xPosition += (elem.offsetLeft + elem.clientLeft);
 //		yPosition += (elem.offsetTop - elem.scrollTop + elem.clientTop);
 		yPosition += (elem.offsetTop + elem.clientTop);
-console.log("OFFSET :"+window.devicePixelRatio+" "+eltHeight+" " + elem.offsetTop +" "+ elem.scrollTop + " "+ elem.clientTop);
+window.alert("OFFSET :"+window.devicePixelRatio+" "+eltHeight+" " + elem.offsetTop +" "+ elem.scrollTop + " "+ elem.clientTop);
 		elem = elem.offsetParent;
 	}
 var midXpos=xPosition + (eltWidth * config.dynamicDisplayXPartOfChart);
@@ -813,18 +813,18 @@ if (yPosition + (eltHeight * config.dynamicDisplayYPartOfChart) >= window.pageYO
 if (yPosition + (eltHeight * config.dynamicDisplayYPartOfChart) <= window.pageYOffset + window.innerHeight)v4=1;
 
 
-console.log(window.pageYOffset+" "+midYpos+" "+offsetY+" "+window.innerHeight+"//"+window.pageXOffset+" "+midXpos+" "+offsetX+" "+window.innerWidth+"/"+v1+v2+v3+v4);
+window.alert(window.pageYOffset+" "+midYpos+" "+offsetY+" "+window.innerHeight+"//"+window.pageXOffset+" "+midXpos+" "+offsetX+" "+window.innerWidth+"/"+v1+v2+v3+v4);
 	if (xPosition + (eltWidth * config.dynamicDisplayXPartOfChart) >= window.pageXOffset &&
 		xPosition + (eltWidth * config.dynamicDisplayXPartOfChart) <= window.pageXOffset + window.innerWidth &&
 		yPosition + (eltHeight * config.dynamicDisplayYPartOfChart) >= window.pageYOffset &&
 		yPosition + (eltHeight * config.dynamicDisplayYPartOfChart) <= window.pageYOffset + window.innerHeight
 	) {
-console.log("return true");
+window.alert("return true");
 //		window.alert("return TRUE !!!");
 		return (true);
 	}
 	else {
-console.log("return false");
+window.alert("return false");
 		return false;
 	}
 };
@@ -3634,9 +3634,9 @@ window.Chart = function(context) {
 
 		ctx.tpchart="HorizontalStackedBar";
 		ctx.tpdata=0;
-console.log("BEFORE INIT_AND_START");
+window.alert("BEFORE INIT_AND_START");
 	        if (!init_and_start(ctx,data,config)) return;
-console.log("INIT_AND_START_OK");
+window.alert("INIT_AND_START_OK");
 		var statData=initPassVariableData_part1(data,config,ctx);
 
 		config.logarithmic = false;
