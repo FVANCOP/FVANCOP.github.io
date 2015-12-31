@@ -769,19 +769,41 @@ function isScrolledIntoView(element,config) {
 	var xPosition = 0;
 	var yPosition = 0;
 	var eltWidth, eltHeight;
-	if (window.devicePixelRatio) {
-		eltWidth=element.width/window.devicePixelRatio;
-		eltHeight=element.height/window.devicePixelRatio;
-	} else {
-		eltWidth=element.width;
-		eltHeight=element.height;
+	if(typeof element.recomputedHeight=="undefined") {
+		if (window.devicePixelRatio) {
+			element.recomputedHeight=element.height/window.devicePixelRatio;
+			element.recomputedWidth=element.width/window.devicePixelRatio;
+//			element.recomputedHeight=element.height;
+//			element.recomputedWidth=element.width;
+//		eltWidth=element.width;
+//		eltHeight=element.height;
+		} else {
+			element.recomputedHeight=element.height;
+			element.recomputedWidth=element.width;
+//			eltWidth=element.width;
+//			eltHeight=element.height;
+		}
 	}
+	eltWidth=element.recomputedWidth;
+	eltHeight=element.recomputedHeight;
 	elem = element;
 	while (elem) {
 		xPosition += (elem.offsetLeft - elem.scrollLeft + elem.clientLeft);
 		yPosition += (elem.offsetTop - elem.scrollTop + elem.clientTop);
 		elem = elem.offsetParent;
 	}
+var midXpos=xPosition + (eltWidth * config.dynamicDisplayXPartOfChart);
+var offsetX=window.pageXOffset + window.innerWidth;
+var midYpos=yPosition + (eltHeight * config.dynamicDisplayYPartOfChart);
+var offsetY=window.pageYOffset + window.innerHeight;
+var v1=0;
+var v2=0;
+var v3=0;
+var v4=0;
+if (xPosition + (eltWidth * config.dynamicDisplayXPartOfChart) >= window.pageXOffset)v1=1;
+if (xPosition + (eltWidth * config.dynamicDisplayXPartOfChart) <= window.pageXOffset + window.innerWidth)v2=1;
+if (yPosition + (eltHeight * config.dynamicDisplayYPartOfChart) >= window.pageYOffset)v3=1;
+if (yPosition + (eltHeight * config.dynamicDisplayYPartOfChart) <= window.pageYOffset + window.innerHeight)v4=1;
 
 
 	if (xPosition + (eltWidth * config.dynamicDisplayXPartOfChart) >= window.pageXOffset &&
