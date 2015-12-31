@@ -813,7 +813,7 @@ if (yPosition + (eltHeight * config.dynamicDisplayYPartOfChart) >= window.pageYO
 if (yPosition + (eltHeight * config.dynamicDisplayYPartOfChart) <= window.pageYOffset + window.innerHeight)v4=1;
 
 
-window.alert(window.pageYOffset+" "+midYpos+" "+offsetY+" "+window.innerHeight+"//"+window.pageXOffset+" "+midXpos+" "+offsetX+" "+window.innerWidth+"/"+v1+v2+v3+v4);
+window.alert(window.innerHeight+"$$"+window.pageYOffset+" "+midYpos+" "+offsetY+" "+window.innerHeight+"//"+window.pageXOffset+" "+midXpos+" "+offsetX+" "+window.innerWidth+"/"+v1+v2+v3+v4);
 	if (xPosition + (eltWidth * config.dynamicDisplayXPartOfChart) >= window.pageXOffset &&
 		xPosition + (eltWidth * config.dynamicDisplayXPartOfChart) <= window.pageXOffset + window.innerWidth &&
 		yPosition + (eltHeight * config.dynamicDisplayYPartOfChart) >= window.pageYOffset &&
