@@ -47,15 +47,19 @@ function tab_disp_graph(tab){
 function tab_disp_canvas(canvas,tpgraph,data,options,runAnimation,setWidth,setHeight,firstDisp){
 
 	if(!runAnimation){
+window.alert("NO ANIMATION");
 		bootStrapChartJsResize(document.getElementById(canvas).getContext("2d"),data,options);
 		return(false);
 	}
 
 	if(!firstDisp) {
+window.alert("YES ANIMATION");
 //	if(firstDisp==2) {
 console.log("Draw Not First Time" + document.getElementById(canvas).getContext("2d").firstPass);
 if(document.getElementById(canvas).getContext("2d").firstPass==3)document.getElementById(canvas).getContext("2d").firstPass=5;
 //console.log("Size:"+document.getElementById(canvas).getContext("2d").original_height+" "+document.getElementById(canvas).getContext("2d").original_width);
+document.getElementById(canvas).getContext("2d").canvas.height=setWidth;
+document.getElementById(canvas).getContext("2d").canvas.width=setHeight;
 updateChart(document.getElementById(canvas).getContext("2d"),data,options,true,true);
 //    	document.getElementById(canvas).getContext("2d").canvas.height=setWidth;
 //    	document.getElementById(canvas).getContext("2d").canvas.width=setHeight;
