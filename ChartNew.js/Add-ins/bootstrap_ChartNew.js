@@ -50,7 +50,7 @@ function tab_disp_canvas(canvas,tpgraph,data,options,runAnimation,setWidth,setHe
 
 	if(!firstDisp) {
 //	if(firstDisp==2) {
-windows.alert("Draw Not First Time" + document.getElementById(canvas).getContext("2d").firstPass);
+window.alert("Draw Not First Time" + document.getElementById(canvas).getContext("2d").firstPass);
 if(document.getElementById(canvas).getContext("2d").firstPass==3)document.getElementById(canvas).getContext("2d").firstPass=5;
 //console.log("Size:"+document.getElementById(canvas).getContext("2d").original_height+" "+document.getElementById(canvas).getContext("2d").original_width);
 updateChart(document.getElementById(canvas).getContext("2d"),data,options,true,true);
