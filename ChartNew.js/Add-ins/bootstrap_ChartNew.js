@@ -59,7 +59,7 @@ if(document.getElementById(canvas).getContext("2d").firstPass==3)document.getEle
 //console.log("Size:"+document.getElementById(canvas).getContext("2d").original_height+" "+document.getElementById(canvas).getContext("2d").original_width);
 // document.getElementById(canvas).getContext("2d").canvas.height=setWidth;
 //document.getElementById(canvas).getContext("2d").canvas.width=setHeight;
-console.log("Size: "+setWidth+" "+setHeight);
+window.alert("Size: "+setWidth+" "+setHeight);
 updateChart(document.getElementById(canvas).getContext("2d"),data,options,true,true);
 //    	document.getElementById(canvas).getContext("2d").canvas.height=setWidth;
 //    	document.getElementById(canvas).getContext("2d").canvas.width=setHeight;
