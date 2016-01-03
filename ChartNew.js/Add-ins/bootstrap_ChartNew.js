@@ -46,13 +46,15 @@ function tab_disp_graph(tab){
 
 function tab_disp_canvas(canvas,tpgraph,data,options,runAnimation,setWidth,setHeight,firstDisp){
 
-	if(!runAnimation)return(false);
+	if(!runAnimation){
+		bootStrapChartJsResize(document.getElementById(canvas).getContext("2d"),data,options);
+		return(false);
+	}
 
 	if(!firstDisp) {
 //	if(firstDisp==2) {
-window.alert("Draw Not First Time New" + document.getElementById(canvas).getContext("2d").firstPass);
+console.log("Draw Not First Time" + document.getElementById(canvas).getContext("2d").firstPass);
 if(document.getElementById(canvas).getContext("2d").firstPass==3)document.getElementById(canvas).getContext("2d").firstPass=5;
-document.getElementById(canvas).getContext("2d").firstPass=5;
 //console.log("Size:"+document.getElementById(canvas).getContext("2d").original_height+" "+document.getElementById(canvas).getContext("2d").original_width);
 updateChart(document.getElementById(canvas).getContext("2d"),data,options,true,true);
 //    	document.getElementById(canvas).getContext("2d").canvas.height=setWidth;
@@ -111,10 +113,24 @@ $('a[data-toggle=tab]').on('shown.bs.tab', function (e) {
 var vl_target=e.target+"";
 vl_target=vl_target.split("#").pop();	
 current_tag=vl_target;
-console.log("Before resize");
-chartJsResize();
-console.log("After resize");
+//console.log("Before resize");
+// Ne faire le resize que pour les chart qui ne doivent pas être réanimé !
+// sinon problème d'affichage.... (affichage double avec taille différente...)
+//bootStrapChartJsResize();
+//console.log("After resize");
 tab_disp_graph(vl_target);
 });
+};
+
+function bootStrapChartJsResize(ctx,data,options) {
+console.log("BOOTSTRAPRESIZE:"+ctx.firstPass); 	
+ctx.firstPass=5;
+	if(typeof ctx.firstPass != "undefined") {
+		if(ctx.firstPass == 5)ctx.firstPass=6;
+	}
+	subUpdateChart(ctx,data,options);
+	if(typeof ctx.firstPass != "undefined") {
+		if(ctx.firstPass == 6)ctx.firstPass=5;
+	}
 };
 
