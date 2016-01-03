@@ -53,7 +53,6 @@ window.alert("NO ANIMATION");
 	}
 
 	if(!firstDisp) {
-window.alert("YES ANIMATION");
 //	if(firstDisp==2) {
 console.log("Draw Not First Time" + document.getElementById(canvas).getContext("2d").firstPass);
 if(document.getElementById(canvas).getContext("2d").firstPass==3)document.getElementById(canvas).getContext("2d").firstPass=5;
