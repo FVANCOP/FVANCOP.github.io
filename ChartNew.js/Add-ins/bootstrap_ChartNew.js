@@ -47,39 +47,15 @@ function tab_disp_graph(tab){
 function tab_disp_canvas(canvas,tpgraph,data,options,runAnimation,setWidth,setHeight,firstDisp){
 
 	if(!runAnimation){
-//window.alert("NO ANIMATION");
 		bootStrapChartJsResize(document.getElementById(canvas).getContext("2d"),data,options);
 		return(false);
 	}
 
 	if(!firstDisp) {
-//	if(firstDisp==2) {
-console.log("Draw Not First Time" + document.getElementById(canvas).getContext("2d").firstPass);
-if(document.getElementById(canvas).getContext("2d").firstPass==3)document.getElementById(canvas).getContext("2d").firstPass=5;
-document.getElementById(canvas).getContext("2d").firstPass=5;
-//console.log("Size:"+document.getElementById(canvas).getContext("2d").original_height+" "+document.getElementById(canvas).getContext("2d").original_width);
-// document.getElementById(canvas).getContext("2d").canvas.height=setWidth;
-//document.getElementById(canvas).getContext("2d").canvas.width=setHeight;
-//window.alert("Size: "+setWidth+" "+setHeight);
-updateChart(document.getElementById(canvas).getContext("2d"),data,options,true,true);
-//    	document.getElementById(canvas).getContext("2d").canvas.height=setWidth;
-//    	document.getElementById(canvas).getContext("2d").canvas.width=setHeight;
-    
-//    	document.getElementById(canvas).getContext("2d").firstPass=undefined;
-//    	document.getElementById(canvas).getContext("2d").runanimationcompletefunction=true;
-//    	document.getElementById(canvas).getContext("2d").tpchart=undefined;
-//    	document.getElementById(canvas).getContext("2d").initialWidth=undefined;
-//    	document.getElementById(canvas).getContext("2d").chartTextScale=undefined;
-//    	document.getElementById(canvas).getContext("2d").chartLineScale=undefined;
-//    	document.getElementById(canvas).getContext("2d").chartSpaceScale=undefined;
-//    	document.getElementById(canvas).getContext("2d").ChartNewId=undefined;
-//    	document.getElementById(canvas).getContext("2d").DefaultchartTextScale=undefined;
-//    	document.getElementById(canvas).getContext("2d").DefaultchartLineScale=undefined;
-//    	document.getElementById(canvas).getContext("2d").DefaultchartSpaceScale=undefined;
-//    	document.getElementById(canvas).getContext("2d").aspectRatio = undefined;    
+		document.getElementById(canvas).getContext("2d").firstPass=5;
+		updateChart(document.getElementById(canvas).getContext("2d"),data,options,true,true);
 }
 else {
-console.log("DRAW First Time");
 	switch (tpgraph) {
 		case "Bar":
 			var chart = new Chart(document.getElementById(canvas).getContext("2d")).Bar(data,options);
@@ -118,18 +94,12 @@ $('a[data-toggle=tab]').on('shown.bs.tab', function (e) {
 var vl_target=e.target+"";
 vl_target=vl_target.split("#").pop();	
 current_tag=vl_target;
-//console.log("Before resize");
-// Ne faire le resize que pour les chart qui ne doivent pas être réanimé !
-// sinon problème d'affichage.... (affichage double avec taille différente...)
-//bootStrapChartJsResize();
-//console.log("After resize");
 tab_disp_graph(vl_target);
 });
 };
 
 function bootStrapChartJsResize(ctx,data,options) {
-console.log("BOOTSTRAPRESIZE:"+ctx.firstPass); 	
-ctx.firstPass=5;
+	ctx.firstPass=5;
 	if(typeof ctx.firstPass != "undefined") {
 		if(ctx.firstPass == 5)ctx.firstPass=6;
 	}
