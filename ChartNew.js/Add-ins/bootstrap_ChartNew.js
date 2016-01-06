@@ -47,7 +47,7 @@ function tab_disp_graph(tab){
 function tab_disp_canvas(canvas,tpgraph,data,options,runAnimation,setWidth,setHeight,firstDisp){
 
 	if(!runAnimation){
-window.alert("NO ANIMATION");
+//window.alert("NO ANIMATION");
 		bootStrapChartJsResize(document.getElementById(canvas).getContext("2d"),data,options);
 		return(false);
 	}
@@ -60,7 +60,7 @@ document.getElementById(canvas).getContext("2d").firstPass=5;
 //console.log("Size:"+document.getElementById(canvas).getContext("2d").original_height+" "+document.getElementById(canvas).getContext("2d").original_width);
 // document.getElementById(canvas).getContext("2d").canvas.height=setWidth;
 //document.getElementById(canvas).getContext("2d").canvas.width=setHeight;
-window.alert("Size: "+setWidth+" "+setHeight);
+//window.alert("Size: "+setWidth+" "+setHeight);
 updateChart(document.getElementById(canvas).getContext("2d"),data,options,true,true);
 //    	document.getElementById(canvas).getContext("2d").canvas.height=setWidth;
 //    	document.getElementById(canvas).getContext("2d").canvas.width=setHeight;
