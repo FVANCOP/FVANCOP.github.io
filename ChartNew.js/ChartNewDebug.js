@@ -541,7 +541,7 @@ function subUpdateChart(ctx,data,config) {
 
 	if(!dynamicFunction(data, config, ctx)) { return; }
 	var newSize;
-
+window.alert("IN SUBUPDATECHART:"+ctx.firstPass);
 	if(typeof ctx.firstPass == "undefined") { 
 		ctx.firstPass=1;
 		newSize=resizeGraph(ctx,config);
