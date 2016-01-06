@@ -500,7 +500,7 @@ function testRedraw(ctx,data,config) {
 };
 
 function updateChart(ctx,data,config,animation,runanimationcompletefunction) {
-window.alert("PASS1:"+ctx.firstPass);
+
 	if (ctx.firstPass==5)
 	{
 		if (window.devicePixelRatio) {
@@ -538,10 +538,10 @@ function subUpdateChart(ctx,data,config) {
 	// ctx.firstPass==6 => chart is displayed but need to be redraw without animation (because of a resize);
 	// ctx.firstPass==7 => chart is displayed but need to be redraw without responsivity;
 	
-window.alert("IN SUB UPDATE CHART");
+
 	if(!dynamicFunction(data, config, ctx)) { return; }
 	var newSize;
-window.alert("TEST OK"+ctx.firstPass);
+
 	if(typeof ctx.firstPass == "undefined") { 
 		ctx.firstPass=1;
 		newSize=resizeGraph(ctx,config);
