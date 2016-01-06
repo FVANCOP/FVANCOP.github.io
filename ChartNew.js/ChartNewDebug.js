@@ -474,6 +474,7 @@ function resizeGraph(ctx,config) {
 
 function chartJsResize() {
 	for (var i=0;i<jsGraphResize.length;i++)  {
+console.log("Before JsResize:"+jsGraphResize[i][2].firstPass);
 		if(typeof jsGraphResize[i][2].firstPass != "undefined") {
 			if(jsGraphResize[i][2].firstPass == 5)jsGraphResize[i][2].firstPass=6;
 		}
@@ -481,6 +482,7 @@ function chartJsResize() {
 		if(typeof jsGraphResize[i][2].firstPass != "undefined") {
 			if(jsGraphResize[i][2].firstPass == 6)jsGraphResize[i][2].firstPass=5;
 		}
+console.log("After JsResize:"+jsGraphResize[i][2].firstPass);
 	}
 };
 
@@ -498,6 +500,7 @@ function testRedraw(ctx,data,config) {
 };
 
 function updateChart(ctx,data,config,animation,runanimationcompletefunction) {
+window.alert("PASS1:"+ctx.firstPass);
 	if (ctx.firstPass==5)
 	{
 		if (window.devicePixelRatio) {
@@ -534,8 +537,11 @@ function subUpdateChart(ctx,data,config) {
 	// ctx.firstPass==5 => chart is displayed ; 
 	// ctx.firstPass==6 => chart is displayed but need to be redraw without animation (because of a resize);
 	// ctx.firstPass==7 => chart is displayed but need to be redraw without responsivity;
+	
+window.alert("IN SUB UPDATE CHART");
 	if(!dynamicFunction(data, config, ctx)) { return; }
 	var newSize;
+window.alert("TEST OK"+ctx.firstPass);
 	if(typeof ctx.firstPass == "undefined") { 
 		ctx.firstPass=1;
 		newSize=resizeGraph(ctx,config);
@@ -600,6 +606,7 @@ function subUpdateChart(ctx,data,config) {
 };
 
 function redrawGraph(ctx,data,config) {
+
 
 	var myGraph = new Chart(ctx);	
 	switch (ctx.tpchart) {
@@ -740,7 +747,6 @@ var dynamicDisplay = new Array();
 var dynamicDisplayList = new Array();
 
 function dynamicFunction(data, config, ctx) {
-window.alert("IN DYNAMICFUNCTION");
 	if (isIE() < 9 && isIE() != false) return(true);
 
 
@@ -761,7 +767,6 @@ window.alert("IN DYNAMICFUNCTION");
 		if (dynamicDisplay[ctx.canvas.id][1] == false && dynamicDisplay[ctx.canvas.id][2] == false) {
 			return false;
 		}
-window.alert("Change to TRUE !");
 		dynamicDisplay[ctx.canvas.id][2] = true;
 	}
 	return true;
@@ -791,12 +796,10 @@ function isScrolledIntoView(element,config) {
 	eltHeight=element.recomputedHeight;
 	elem = element;
 	while (elem) {
-window.alert("IN LOOP")
 //		xPosition += (elem.offsetLeft - elem.scrollLeft + elem.clientLeft);
 		xPosition += (elem.offsetLeft + elem.clientLeft);
 //		yPosition += (elem.offsetTop - elem.scrollTop + elem.clientTop);
 		yPosition += (elem.offsetTop + elem.clientTop);
-window.alert("OFFSET :"+window.devicePixelRatio+" "+eltHeight+" " + elem.offsetTop +" "+ elem.scrollTop + " "+ elem.clientTop);
 		elem = elem.offsetParent;
 	}
 var midXpos=xPosition + (eltWidth * config.dynamicDisplayXPartOfChart);
@@ -813,18 +816,15 @@ if (yPosition + (eltHeight * config.dynamicDisplayYPartOfChart) >= window.pageYO
 if (yPosition + (eltHeight * config.dynamicDisplayYPartOfChart) <= window.pageYOffset + window.innerHeight)v4=1;
 
 
-window.alert(window.innerHeight+"$$"+window.pageYOffset+" "+midYpos+" "+offsetY+" "+window.innerHeight+"//"+window.pageXOffset+" "+midXpos+" "+offsetX+" "+window.innerWidth+"/"+v1+v2+v3+v4);
 	if (xPosition + (eltWidth * config.dynamicDisplayXPartOfChart) >= window.pageXOffset &&
 		xPosition + (eltWidth * config.dynamicDisplayXPartOfChart) <= window.pageXOffset + window.innerWidth &&
 		yPosition + (eltHeight * config.dynamicDisplayYPartOfChart) >= window.pageYOffset &&
 		yPosition + (eltHeight * config.dynamicDisplayYPartOfChart) <= window.pageYOffset + window.innerHeight
 	) {
-window.alert("return true");
 //		window.alert("return TRUE !!!");
 		return (true);
 	}
 	else {
-window.alert("return false");
 		return false;
 	}
 };
@@ -2396,6 +2396,12 @@ window.Chart = function(context) {
 				minSteps: minSteps
 			};
 		};
+
+		return {
+			data:data,
+			config:config,
+			ctx:ctx
+		};
 	};
 	var Radar = function(data, config, ctx) {
 		var maxSize, scaleHop, calculatedScale, labelHeight, scaleHeight, valueBounds, labelTemplateString, msr, midPosX, midPosY;
@@ -2722,6 +2728,12 @@ window.Chart = function(context) {
 				minSteps: minSteps
 			};
 		};
+
+		return {
+			data:data,
+			config:config,
+			ctx:ctx
+		};
 	};
 
 
@@ -2871,7 +2883,11 @@ window.Chart = function(context) {
 			if(msr.legendMsr.dispLegend)drawLegend(msr.legendMsr,data,config,ctx,"Doughnut");
 		};
 		
-
+		return {
+			data:data,
+			config:config,
+			ctx:ctx
+		};
 	};
 	var Line = function(data, config, ctx) {
 		var maxSize, scaleHop, scaleHop2, calculatedScale, calculatedScale2, labelHeight, scaleHeight, valueBounds, labelTemplateString, labelTemplateString2;
@@ -3254,6 +3270,11 @@ window.Chart = function(context) {
 				minSteps: minSteps
 			};
 		};
+		return {
+			data:data,
+			config:config,
+			ctx:ctx
+		};
 	};
 	var StackedBar = function(data, config, ctx) {
 		var maxSize, scaleHop, calculatedScale, labelHeight, scaleHeight, valueBounds, labelTemplateString, valueHop, widestXLabel, xAxisLength, yAxisPosX, xAxisPosY, barWidth, rotateLabels = 0,
@@ -3605,6 +3626,11 @@ window.Chart = function(context) {
 				minSteps: minSteps
 			};
 		};
+		return {
+			data:data,
+			config:config,
+			ctx:ctx
+		};
 	};
 	/**
 	 * Reverse the data structure for horizontal charts
@@ -3634,9 +3660,7 @@ window.Chart = function(context) {
 
 		ctx.tpchart="HorizontalStackedBar";
 		ctx.tpdata=0;
-window.alert("BEFORE INIT_AND_START");
 	        if (!init_and_start(ctx,data,config)) return;
-window.alert("INIT_AND_START_OK");
 		var statData=initPassVariableData_part1(data,config,ctx);
 
 		config.logarithmic = false;
@@ -3979,6 +4003,11 @@ window.alert("INIT_AND_START_OK");
 			};
 
 
+		};
+		return {
+			data:data,
+			config:config,
+			ctx:ctx
 		};
 	};
 	var Bar = function(data, config, ctx) {
@@ -4432,6 +4461,12 @@ window.alert("INIT_AND_START_OK");
 				minSteps: minSteps
 			};
 		};
+
+		return {
+			data:data,
+			config:config,
+			ctx:ctx
+		};
 	};
 
 	var HorizontalBar = function(data, config, ctx) {
@@ -4739,6 +4774,12 @@ window.alert("INIT_AND_START_OK");
 				maxSteps: maxSteps,
 				minSteps: minSteps
 			};
+		};
+
+		return {
+			data:data,
+			config:config,
+			ctx:ctx
 		};
 	};
 
