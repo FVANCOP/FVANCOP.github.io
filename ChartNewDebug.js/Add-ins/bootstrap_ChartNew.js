@@ -52,41 +52,20 @@ function tab_disp_canvas(canvas,tpgraph,data,options,runAnimation,setWidth,setHe
 	}
 
 	if(!firstDisp) {
-		document.getElementById(canvas).getContext("2d").firstPass=5;
-		updateChart(document.getElementById(canvas).getContext("2d"),data,options,true,true);
-}
-else {
-	switch (tpgraph) {
-		case "Bar":
-			var chart = new Chart(document.getElementById(canvas).getContext("2d")).Bar(data,options);
-		
-			break;
-		case "Pie":
-			var chart = new Chart(document.getElementById(canvas).getContext("2d")).Pie(data,options);
-			break;
-		case "Doughnut":
-			var chart = new Chart(document.getElementById(canvas).getContext("2d")).Doughtnut(data,options);
-			break;
-		case "Radar":
-			var chart = new Chart(document.getElementById(canvas).getContext("2d")).Radar(data,options);
-			break;
-		case "PolarArea":
-			var chart = new Chart(document.getElementById(canvas).getContext("2d")).PolarArea(data,options);
-			break;
-		case "HorizontalBar":
-			var chart = new Chart(document.getElementById(canvas).getContext("2d")).HorizontalBar(data,options);
-			break;
-		case "StackedBar":
-			var chart = new Chart(document.getElementById(canvas).getContext("2d")).StackedBar(data,options);
-			break;
-		case "HorizontalStackedBar":
-			var chart = new Chart(document.getElementById(canvas).getContext("2d")).HorizontalStackedBar(data,options);
-			break;
-		case "Line":
-			var chart = new Chart(document.getElementById(canvas).getContext("2d")).Line(data,options);
-			break;
+//		bootStrapChartJsResize(document.getElementById(canvas).getContext("2d"),data,options);
+//		document.getElementById(canvas).getContext("2d").firstPass=9;
+//		bootStrapChartJsResize(document.getElementById(canvas).getContext("2d"),data,options);
+//		document.getElementById(canvas).getContext("2d").stroke();
+//		document.getElementById(canvas).getContext("2d").clearRect(0, 0, document.getElementById(canvas).getContext("2d").canvas.width, document.getElementById(canvas).getContext("2d").canvas.height);
+//		document.getElementById(canvas).getContext("2d").stroke();
+//		document.getElementById(canvas).getContext("2d").firstPass=9;
+//		updateChart(document.getElementById(canvas).getContext("2d"),data,options,true,true);
+		document.getElementById(canvas).getContext("2d").firstPass=undefined;
+		eval("var chart = new Chart(document.getElementById(canvas).getContext(\"2d\"))."+tpgraph+"(data,options);"); 
 	}
-}
+	else {
+		eval("var chart = new Chart(document.getElementById(canvas).getContext(\"2d\"))."+tpgraph+"(data,options);"); 
+	}
 };
 
 function setRefreshCanvas() {
@@ -99,13 +78,7 @@ tab_disp_graph(vl_target);
 };
 
 function bootStrapChartJsResize(ctx,data,options) {
-	ctx.firstPass=5;
-	if(typeof ctx.firstPass != "undefined") {
-		if(ctx.firstPass == 5)ctx.firstPass=6;
-	}
-	subUpdateChart(ctx,data,options);
-	if(typeof ctx.firstPass != "undefined") {
-		if(ctx.firstPass == 6)ctx.firstPass=5;
-	}
+	ctx.firstPass=9;
+	updateChart(ctx,data,options,false,false);
 };
 
