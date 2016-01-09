@@ -5203,7 +5203,16 @@ window.Chart = function(context) {
 		}
 	};
 	//****************************************************************************************
-	function setMeasures(data, config, ctx, height, width, ylabels, ylabels2, reverseLegend, reverseAxis, drawAxis, drawLegendOnData, legendBox, typegraph) {
+	function setMeasures(data, config, ctx, canvasheight, canvaswidth, ylabels, ylabels2, reverseLegend, reverseAxis, drawAxis, drawLegendOnData, legendBox, typegraph) {
+
+        	var height=canvasheight;
+        	var width=canvaswidth;
+		if (window.devicePixelRatio && config.responsive==false) {
+			height=height/window.devicePixelRatio;
+			width=width/window.devicePixelRatio;
+		}
+        	
+
 		if (config.canvasBackgroundColor != "none") ctx.canvas.style.background = config.canvasBackgroundColor;
 		var borderWidth = 0;
 		var xAxisLabelPos = 0;
