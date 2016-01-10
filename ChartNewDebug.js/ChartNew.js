@@ -506,10 +506,9 @@ function updateChart(ctx,data,config,animation,runanimationcompletefunction) {
 
 	if (ctx.firstPass==9)
 	{
-		if (window.devicePixelRatio) {
+		if (window.devicePixelRatio && !(config.responsive==true)){
 			ctx.canvas.width=ctx.canvas.width/window.devicePixelRatio;
 			ctx.canvas.height=ctx.canvas.height/window.devicePixelRatio;
-			
 		}
 		
 		ctx.runanimationcompletefunction=runanimationcompletefunction;
