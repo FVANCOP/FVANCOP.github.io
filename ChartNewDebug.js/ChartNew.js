@@ -733,7 +733,7 @@ function doMouseAction(config, ctx, event, data, action, funct) {
 	var topY, bottomY;
 	var leftX, rightX;
 	var textMsr;
-	
+window.alert("Action:"+action);
 	if (action == "annotate") {
 		var annotateDIV = document.getElementById('divCursor');
 		var show = false;
