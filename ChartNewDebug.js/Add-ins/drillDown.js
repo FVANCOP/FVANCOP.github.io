@@ -18,7 +18,7 @@ function chartDrillDown(event,ctx,config,data,other)
 {
   window.alert("IN DRILL DOWN")
   if(other != null) {
-  	window.alert("NOT UP");
+  	window.alert("NOT UP "+other.i);
   	if(data.datasets[other.i].drillDownData != null) {
   		if(data.datasets[other.i].drillDownData[other.j] != null) {
   			var vconfig=config;
