@@ -7,6 +7,7 @@ var posDrillDownBackData=0;
 
 function chartDrillUp(event,ctx,config,data,other)
 {
+	window.alert("IN DRILL UP");
 	if(posDrillDownBackData>0) {
 		posDrillDownBackData--;
 		updateChart(ctx,drillDownBackData[posDrillDownBackData],drillDownBackConfig[posDrillDownBackData],false,false);
@@ -15,7 +16,9 @@ function chartDrillUp(event,ctx,config,data,other)
 
 function chartDrillDown(event,ctx,config,data,other)
 {
+  window.alert("IN DRILL DOWN")
   if(other != null) {
+  	window.alert("NOT UP");
   	if(data.datasets[other.i].drillDownData != null) {
   		if(data.datasets[other.i].drillDownData[other.j] != null) {
   			var vconfig=config;
@@ -26,9 +29,12 @@ function chartDrillDown(event,ctx,config,data,other)
 		}
 	}
   } else if(config.drillOutsideUp){
+  	window.alert("UP");
 	if(posDrillDownBackData>0) {
 		posDrillDownBackData--;
 		updateChart(ctx,drillDownBackData[posDrillDownBackData],drillDownBackConfig[posDrillDownBackData],false,false);
 	}
+  } else {
+  	window.alert("NONE");
   }
 }
