@@ -1994,7 +1994,10 @@ window.Chart = function(context) {
 
 		if (!dynamicFunction(data, config, ctx)) return false;   // if config.dynamicDisplay=true, chart has to be displayed only if in current screen;  
 
-		if (!config.multiGraph && ctx.firstPass!=0) clearAnnotate(ctx.ChartNewId);
+		if (!config.multiGraph && ctx.firstPass!=0) {
+			clearAnnotate(ctx.ChartNewId);
+			ctx._eventListeners = undefined;
+			ctx._eventListeners = {};		}
 
 		if (typeof jsGraphAnnotate[ctx.ChartNewId] == "undefined") {
 			jsGraphAnnotate[ctx.ChartNewId] = new Array();
