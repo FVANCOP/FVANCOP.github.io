@@ -773,14 +773,14 @@ function highLightAction(action,ctx,data,config,v1,v2) {
 			if(typeof data.special == "undefined") data.special=[];
 			if(config.highLightFullLine == "group") {
 				for(j=0;j<data.datasets.length;j++) {
-					data.special[data.special.length]={ posi: j, posj : v2, typespecial: "highLight", pointDotRadius: 15,fillColor : "pink" } ;
+					data.special[data.special.length]={ posi: j, posj : v2, typespecial: "highLight", pointDotRadius: 15,fillColor : "pink", pointDot : true } ;
 				}
 			
 			} else if(config.highLightFullLine == true) {
 				for(j=0;j<data.datasets[v1].data.length;j++) {
-					data.special[data.special.length]={ posi: v1, posj : j, typespecial: "highLight", pointDotRadius: 15,fillColor : "pink" } ;
+					data.special[data.special.length]={ posi: v1, posj : j, typespecial: "highLight", pointDotRadius: 15,fillColor : "pink", pointDot : true } ;
 				}
-			} else data.special[data.special.length]={ posi: v1, posj : v2, typespecial: "highLight", pointDotRadius: 15,fillColor : "pink" } ;
+			} else data.special[data.special.length]={ posi: v1, posj : v2, typespecial: "highLight", pointDotRadius: 15,fillColor : "pink", pointDot : true } ;
 		} else {
 			if(typeof data[0].special == "undefined") data[0].special=[];
 			data[0].special[data[0].special.length]={ posi: v1, posj : -1, typespecial: "highLight", color : "pink" } ;
@@ -2459,19 +2459,21 @@ window.Chart = function(context) {
 				ctx.setLineDash(lineStyleFn(setOptionValue(true,1,"LINEDASH",ctx,data,statData,data.datasets[i].datasetStrokeStyle,config.datasetStrokeStyle,"datasetStrokeStyle",i,j,{nullvalue : null} )));
 				ctx.stroke();
 				ctx.setLineDash([]);
-				if (config.pointDot && animationDecimal >= config.animationStopValue) {
+				if (animationDecimal >= config.animationStopValue) {
 					ctx.beginPath();
 
 					for (var k = 0; k < data.datasets[i].data.length; k++) {
 						if (!(typeof(data.datasets[i].data[k]) == 'undefined')) {
-							ctx.beginPath();
-							ctx.fillStyle=setOptionValue(true,1,"MARKERFILLCOLOR",ctx,data,statData,data.datasets[i].pointColor,config.defaultStrokeColor,"pointColor",i,k,{nullvalue: true} );
-							ctx.strokeStyle=setOptionValue(true,1,"MARKERSTROKESTYLE",ctx,data,statData,data.datasets[i].pointStrokeColor,config.defaultStrokeColor,"pointStrokeColor",i,k,{nullvalue: true} );
-							ctx.lineWidth=setOptionValue(true,ctx.chartLineScale,"MARKERLINEWIDTH",ctx,data,statData,data.datasets[i].pointDotStrokeWidth,config.pointDotStrokeWidth,"pointDotStrokeWidth",i,k,{nullvalue: true} );
-							var markerShape=setOptionValue(true,1,"MARKERSHAPE",ctx,data,statData,data.datasets[i].markerShape,config.markerShape,"markerShape",i,k,{nullvalue: true} );
-							var markerRadius=setOptionValue(true,ctx.chartSpaceScale,"MARKERRADIUS",ctx,data,statData,data.datasets[i].pointDotRadius,config.pointDotRadius,"pointDotRadius",i,k,{nullvalue: true} );
-							var markerStrokeStyle=setOptionValue(true,1,"MARKERSTROKESTYLE",ctx,data,statData,data.datasets[i].pointDotStrokeStyle,config.pointDotStrokeStyle,"pointDotStrokeStyle",i,k,{nullvalue: true} );
-							drawMarker(ctx,midPosX + currentAnimPc * statData[i][k].offsetX, midPosY - currentAnimPc * statData[i][k].offsetY, markerShape,markerRadius,markerStrokeStyle);							
+							if(setOptionValue(true,1,"POINTDOT",ctx,data,statData,undefined,config.pointDot,"pointDot",i,k,{nullvalue : null} )) {
+								ctx.beginPath();
+								ctx.fillStyle=setOptionValue(true,1,"MARKERFILLCOLOR",ctx,data,statData,data.datasets[i].pointColor,config.defaultStrokeColor,"pointColor",i,k,{nullvalue: true} );
+								ctx.strokeStyle=setOptionValue(true,1,"MARKERSTROKESTYLE",ctx,data,statData,data.datasets[i].pointStrokeColor,config.defaultStrokeColor,"pointStrokeColor",i,k,{nullvalue: true} );
+								ctx.lineWidth=setOptionValue(true,ctx.chartLineScale,"MARKERLINEWIDTH",ctx,data,statData,data.datasets[i].pointDotStrokeWidth,config.pointDotStrokeWidth,"pointDotStrokeWidth",i,k,{nullvalue: true} );
+								var markerShape=setOptionValue(true,1,"MARKERSHAPE",ctx,data,statData,data.datasets[i].markerShape,config.markerShape,"markerShape",i,k,{nullvalue: true} );
+								var markerRadius=setOptionValue(true,ctx.chartSpaceScale,"MARKERRADIUS",ctx,data,statData,data.datasets[i].pointDotRadius,config.pointDotRadius,"pointDotRadius",i,k,{nullvalue: true} );
+								var markerStrokeStyle=setOptionValue(true,1,"MARKERSTROKESTYLE",ctx,data,statData,data.datasets[i].pointDotStrokeStyle,config.pointDotStrokeStyle,"pointDotStrokeStyle",i,k,{nullvalue: true} );
+								drawMarker(ctx,midPosX + currentAnimPc * statData[i][k].offsetX, midPosY - currentAnimPc * statData[i][k].offsetY, markerShape,markerRadius,markerStrokeStyle);							
+							}
 						}
 					}
 				}
@@ -6143,20 +6145,22 @@ window.Chart = function(context) {
 					}
 				} 
 				ctx.restore();
-				if (config.pointDot && animPc >= 1) {
+				if (animPc >= 1) {
 					for (j = 0; j < data.datasets[i].data.length; j++) {
 						if (!(typeof(data.datasets[i].data[j]) == 'undefined')) {
 							currentAnimPc = animationCorrection(animPc, data, config, i, j, true);
 							if (currentAnimPc.mainVal > 0 || !config.animationLeftToRight) {
-								ctx.beginPath();
-								ctx.fillStyle=setOptionValue(true,1,"MARKERFILLCOLOR",ctx,data,statData,data.datasets[i].pointColor,config.defaultStrokeColor,"pointColor",i,j,{nullvalue: true} );
-								ctx.strokeStyle=setOptionValue(true,1,"MARKERSTROKESTYLE",ctx,data,statData,data.datasets[i].pointStrokeColor,config.defaultStrokeColor,"pointStrokeColor",i,j,{nullvalue: true} );
-								ctx.lineWidth=setOptionValue(true,ctx.chartLineScale,"MARKERLINEWIDTH",ctx,data,statData,data.datasets[i].pointDotStrokeWidth,config.pointDotStrokeWidth,"pointDotStrokeWidth",i,j,{nullvalue: true} );
-								var markerShape=setOptionValue(true,1,"MARKERSHAPE",ctx,data,statData,data.datasets[i].markerShape,config.markerShape,"markerShape",i,j,{nullvalue: true} );
-								var markerRadius=setOptionValue(true,ctx.chartSpaceScale,"MARKERRADIUS",ctx,data,statData,data.datasets[i].pointDotRadius,config.pointDotRadius,"pointDotRadius",i,j,{nullvalue: true} );
-								var markerStrokeStyle=setOptionValue(true,1,"MARKERSTROKESTYLE",ctx,data,statData,data.datasets[i].pointDotStrokeStyle,config.pointDotStrokeStyle,"pointDotStrokeStyle",i,j,{nullvalue: true} );
-								drawMarker(ctx, statData[i][j].xPos , statData[i][j].yAxisPos - currentAnimPc.mainVal * statData[i][j].yPosOffset, markerShape,markerRadius,markerStrokeStyle);							
-							}
+								if(setOptionValue(true,1,"POINTDOT",ctx,data,statData,undefined,config.pointDot,"pointDot",i,j,{nullvalue : null} )) {
+									ctx.beginPath();
+									ctx.fillStyle=setOptionValue(true,1,"MARKERFILLCOLOR",ctx,data,statData,data.datasets[i].pointColor,config.defaultStrokeColor,"pointColor",i,j,{nullvalue: true} );
+									ctx.strokeStyle=setOptionValue(true,1,"MARKERSTROKESTYLE",ctx,data,statData,data.datasets[i].pointStrokeColor,config.defaultStrokeColor,"pointStrokeColor",i,j,{nullvalue: true} );
+									ctx.lineWidth=setOptionValue(true,ctx.chartLineScale,"MARKERLINEWIDTH",ctx,data,statData,data.datasets[i].pointDotStrokeWidth,config.pointDotStrokeWidth,"pointDotStrokeWidth",i,j,{nullvalue: true} );
+									var markerShape=setOptionValue(true,1,"MARKERSHAPE",ctx,data,statData,data.datasets[i].markerShape,config.markerShape,"markerShape",i,j,{nullvalue: true} );
+									var markerRadius=setOptionValue(true,ctx.chartSpaceScale,"MARKERRADIUS",ctx,data,statData,data.datasets[i].pointDotRadius,config.pointDotRadius,"pointDotRadius",i,j,{nullvalue: true} );
+									var markerStrokeStyle=setOptionValue(true,1,"MARKERSTROKESTYLE",ctx,data,statData,data.datasets[i].pointDotStrokeStyle,config.pointDotStrokeStyle,"pointDotStrokeStyle",i,j,{nullvalue: true} );
+									drawMarker(ctx, statData[i][j].xPos , statData[i][j].yAxisPos - currentAnimPc.mainVal * statData[i][j].yPosOffset, markerShape,markerRadius,markerStrokeStyle);							
+								}
+        						}
 						}
 					}
 				}
