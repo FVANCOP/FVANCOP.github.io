@@ -128,6 +128,7 @@ function drawShapes(area, ctx, data,statData, posi,posj,othervars){
 		shapeLoadImages(data);
 	
 		for(var i=0;i<shapesInChart.length;i++) {
+		
 			if(typeof othervars.config.dispShapesInChart == "object") {
 				if (othervars.config.dispShapesInChart.indexOf(i)<0) continue;
 			} else if (typeof othervars.config.dispShapesInChart != "undefined") {
@@ -139,7 +140,8 @@ function drawShapes(area, ctx, data,statData, posi,posj,othervars){
 			iter=drawShapeSetValue(shapesInChart[i].iter,drawShape_default.iter.toUpperCase());
 			if (typeof iter=="number" && iter != othervars.cntiter && othervars.config.animation==true) {continue;}
 			if (iter==="first" && othervars.cntiter != 1 && othervars.config.animation==true) {continue;}
-			if (iter==="last" && othervars.cntiter != othervars.config.animationSteps && othervars.config.animation==true) {continue;}
+//			if (iter==="last" && othervars.cntiter != othervars.config.animationSteps && othervars.config.animation==true) {continue;}
+			if (iter==="last" && othervars.animationValue < 1 && othervars.config.animation==true) {continue;}
 			if(typeof shapesInChart[i].shape == "function")shape= shapesInChart[i].shape;
 			else if(typeof shapesInChart[i].shape != "string")shape= drawShape_default.shape.toUpperCase();
 			else shape=shapesInChart[i].shape.toUpperCase();
