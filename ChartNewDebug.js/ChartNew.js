@@ -1,3 +1,5 @@
+
+window.alert("NEW VERSION");
 /*              
  * ChartNew.js  
  *                                                                                   
