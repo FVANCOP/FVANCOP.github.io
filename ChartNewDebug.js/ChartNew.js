@@ -4275,7 +4275,8 @@ window.Chart = function(context) {
 			ctx.lineTo(x + radius, y - h);
 			ctx.quadraticCurveTo(x, y - h, x, y - h + fact*radius);
 			ctx.lineTo(x, y);
-			ctx.quadraticCurveTo(x + radius, y, x + radius, y);
+			ctx.lineTo(x+radius, y);
+//			ctx.quadraticCurveTo(x + radius, y, x + radius, y);
 			if (stroke) ctx.stroke();
 			ctx.closePath();
 			ctx.fill();
