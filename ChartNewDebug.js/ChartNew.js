@@ -1,5 +1,5 @@
 
-window.alert("NEW VERSION");
+window.alert("NEW VERSION 2");
 /*              
  * ChartNew.js  
  *                                                                                   
@@ -4269,15 +4269,16 @@ window.Chart = function(context) {
 		function roundRect(ctx, x, y, w, h, stroke, radius,i,j,fact) {
 			ctx.beginPath();
 			ctx.setLineDash(lineStyleFn(setOptionValue(true,1,"STROKESTYLE",ctx,data,statData,data.datasets[i].datasetStrokeStyle,config.datasetStrokeStyle,"datasetStrokeStyle",i,j,{nullvalue : null} )));
-			ctx.moveTo(x + radius, y);
-			ctx.lineTo(x + w - radius, y);
-			ctx.quadraticCurveTo(x + w, y, x + w, y);
+//			ctx.moveTo(x + radius, y);
+			ctx.moveTo(x , y);
+//			ctx.lineTo(x + w - radius, y);
+//			ctx.quadraticCurveTo(x + w, y, x + w, y);
+			ctx.lineTo(x + w , y);
 			ctx.lineTo(x + w, y - h + fact*radius);
 			ctx.quadraticCurveTo(x + w, y - h, x + w - radius, y - h);
 			ctx.lineTo(x + radius, y - h);
 			ctx.quadraticCurveTo(x, y - h, x, y - h + fact*radius);
 			ctx.lineTo(x, y);
-			ctx.lineTo(x+radius, y);
 //			ctx.quadraticCurveTo(x + radius, y, x + radius, y);
 			if (stroke) ctx.stroke();
 			ctx.closePath();
