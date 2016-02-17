@@ -763,4 +763,3 @@ function drawShapes(area, ctx, data,statData, posi,posj,othervars){
 	};
 
 };
-
