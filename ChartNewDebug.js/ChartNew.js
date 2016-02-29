@@ -881,6 +881,7 @@ function doMouseAction(event, ctx, action) {
 	if (ctx.firstPass != 9)return;
 	if(action=="mousedown") action=action+" "+event.which;
 	if(ctx.mouseAction.indexOf(action)<0){return;}
+console.log(action);
 	var config=mouseActionData[ctx.ChartNewId].config;
 	var data=mouseActionData[ctx.ChartNewId].data;
 	var i,prevShown,prevShowSaved;
@@ -899,6 +900,7 @@ function doMouseAction(event, ctx, action) {
 	else if(action==mousewheelevt)realAction="mousewheel";
 	else realAction=action;
 
+console.log(action+" "+realAction);
 	// search if mouse over one or more pieces of chart;
 
 	for (i = 0; i < jsGraphAnnotate[ctx.ChartNewId]["length"]; i++) {
@@ -1025,6 +1027,30 @@ function doMouseAction(event, ctx, action) {
 		saveCanvas(ctx, data, config);
 	}
 	
+	var whoToReferAnnotate=-1;
+	var whoToReferHighLight=-1;
+	var referAnnotateIsPoint=false;
+	var referHighLightIsPoint=false;
+	for(i=pieceOfChartFound.length-1;i>=0;i--) {
+		if (jsGraphAnnotate[ctx.ChartNewId][pieceOfChartFound[i].piece][4]) {
+			if(referAnnotateIsPoint==false) {
+				if(whoToReferAnnotate==-1)whoToReferAnnotate=i;
+				if(jsGraphAnnotate[ctx.ChartNewId][pieceOfChartFound[i].piece][0] == "POINT") {
+					whoToReferAnnotate=i;
+					referAnnotateIsPoint=true;
+				}
+			}
+		}
+		if(referHighLightIsPoint==false) {
+			if(whoToReferHighLight==-1)whoToReferHighLight=i;
+			if(jsGraphAnnotate[ctx.ChartNewId][pieceOfChartFound[i].piece][0] == "POINT") {
+				whoToReferHighLight=i;
+				referHighLightIsPoint=true;
+			}
+		}
+		
+	}
+	
 	if(config.annotateDisplay && isAction(config.annotateFunction,realAction)) {
 		// annotate display functionality;
 		annotateDIV = document.getElementById('divCursor');
@@ -1044,10 +1070,10 @@ function doMouseAction(event, ctx, action) {
 			ctx.font= annotateDIV.style.fontStyle+" "+ annotateDIV.style.fontSize+" "+annotateDIV.style.fontFamily;
 			var rect = ctx.canvas.getBoundingClientRect();
 			showDiv=false;
-			for(i=pieceOfChartFound.length-1;i>=0 && showDiv==false;i--) {
-				if (jsGraphAnnotate[ctx.ChartNewId][i][4]) {
-					if (jsGraphAnnotate[ctx.ChartNewId][pieceOfChartFound[i].piece][0] == "ARC") dispString = tmplbis(setOptionValue(true,1,"ANNOTATELABEL",ctx,data,jsGraphAnnotate[ctx.ChartNewId][pieceOfChartFound[i].piece][3],undefined,config.annotateLabel,"annotateLabel",jsGraphAnnotate[ctx.ChartNewId][pieceOfChartFound[i].piece][1],-1,{otherVal:true}), pieceOfChartFound[i].myStatData,config);
-					else dispString = tmplbis(setOptionValue(true,1,"ANNOTATELABEL",ctx,data,jsGraphAnnotate[ctx.ChartNewId][pieceOfChartFound[i].piece][3],undefined,config.annotateLabel,"annotateLabel",jsGraphAnnotate[ctx.ChartNewId][pieceOfChartFound[i].piece][1],jsGraphAnnotate[ctx.ChartNewId][pieceOfChartFound[i].piece][2],{otherVal:true}), pieceOfChartFound[i].myStatData,config);
+			if(whoToReferAnnotate!=-1) {
+				if (jsGraphAnnotate[ctx.ChartNewId][pieceOfChartFound[whoToReferAnnotate].piece][4]) {
+					if (jsGraphAnnotate[ctx.ChartNewId][pieceOfChartFound[whoToReferAnnotate].piece][0] == "ARC") dispString = tmplbis(setOptionValue(true,1,"ANNOTATELABEL",ctx,data,jsGraphAnnotate[ctx.ChartNewId][pieceOfChartFound[whoToReferAnnotate].piece][3],undefined,config.annotateLabel,"annotateLabel",jsGraphAnnotate[ctx.ChartNewId][pieceOfChartFound[whoToReferAnnotate].piece][1],-1,{otherVal:true}), pieceOfChartFound[whoToReferAnnotate].myStatData,config);
+					else dispString = tmplbis(setOptionValue(true,1,"ANNOTATELABEL",ctx,data,jsGraphAnnotate[ctx.ChartNewId][pieceOfChartFound[whoToReferAnnotate].piece][3],undefined,config.annotateLabel,"annotateLabel",jsGraphAnnotate[ctx.ChartNewId][pieceOfChartFound[whoToReferAnnotate].piece][1],jsGraphAnnotate[ctx.ChartNewId][pieceOfChartFound[whoToReferAnnotate].piece][2],{otherVal:true}), pieceOfChartFound[whoToReferAnnotate].myStatData,config);
 					textMsr=ctx.measureTextMultiLine(dispString,1*annotateDIV.style.fontSize.replace("pt",""));
 					ctx.restore();
 					annotateDIV.innerHTML = dispString;
@@ -1087,15 +1113,13 @@ function doMouseAction(event, ctx, action) {
 	}
 	
 
-	if(inMouseAction[ctx.ChartNewId]==false && mouseActionData[ctx.ChartNewId].prevShow==-1 && isAction("mousemove",realAction) &&  pieceOfChartFound.length>0) {
+	if(pieceOfChartFound.length>0 && inMouseAction[ctx.ChartNewId]==false && mouseActionData[ctx.ChartNewId].prevShow!=pieceOfChartFound[whoToReferHighLight].piece && isAction("mousemove",realAction)) {
 		inMouseAction[ctx.ChartNewId]=true;
 		prevShow=mouseActionData[ctx.ChartNewId].prevShow;
-//		mouseActionData[ctx.ChartNewId].prevShow=pieceOfChartFound[pieceOfChartFound.length-1].piece;
-
 	       	if(config.highLight && isAction(config.highLightMouseFunction,realAction)) {
-			for(i=0;i<pieceOfChartFound.length;i++) {
-				if(jsGraphAnnotate[ctx.ChartNewId][pieceOfChartFound[i].piece][0] == "ARC") highLightAction("ARC",ctx,data,config,jsGraphAnnotate[ctx.ChartNewId][pieceOfChartFound[i].piece][1],-1);
-				else highLightAction(jsGraphAnnotate[ctx.ChartNewId][pieceOfChartFound[i].piece][0],ctx,data,config,jsGraphAnnotate[ctx.ChartNewId][pieceOfChartFound[i].piece][1],jsGraphAnnotate[ctx.ChartNewId][pieceOfChartFound[i].piece][2]);
+			if(whoToReferHighLight!=-1) {
+				if(jsGraphAnnotate[ctx.ChartNewId][pieceOfChartFound[whoToReferHighLight].piece][0] == "ARC") highLightAction("ARC",ctx,data,config,jsGraphAnnotate[ctx.ChartNewId][pieceOfChartFound[whoToReferHighLight].piece][1],-1);
+				else highLightAction(jsGraphAnnotate[ctx.ChartNewId][pieceOfChartFound[whoToReferHighLight].piece][0],ctx,data,config,jsGraphAnnotate[ctx.ChartNewId][pieceOfChartFound[whoToReferHighLight].piece][1],jsGraphAnnotate[ctx.ChartNewId][pieceOfChartFound[whoToReferHighLight].piece][2]);
 			}
 		}	
 
@@ -1104,15 +1128,15 @@ function doMouseAction(event, ctx, action) {
 			else  config.annotateFunctionIn("INANNOTATE",ctx,data,jsGraphAnnotate[ctx.ChartNewId][pieceOfChartFound[pieceOfChartFound.length-1].piece][3],jsGraphAnnotate[ctx.ChartNewId][pieceOfChartFound[pieceOfChartFound.length-1].piece][1],jsGraphAnnotate[ctx.ChartNewId][pieceOfChartFound[pieceOfChartFound.length-1].piece][2],null);
 		}
 		inMouseAction[ctx.ChartNewId]=false;
-		mouseActionData[ctx.ChartNewId].prevShow=pieceOfChartFound[pieceOfChartFound.length-1].piece;
+		mouseActionData[ctx.ChartNewId].prevShow=pieceOfChartFound[whoToReferHighLight].piece;
 	}
 
        	if (config.highLight && isAction(config.highLightMouseFunction,realAction) && isAction("mousemove",realAction)==false) {
 		if(pieceOfChartFound.length==0)highLightAction("HIDE",ctx,data,config,null,null);
 		else {
-			for(i=pieceOfChartFound.length-1;i<pieceOfChartFound.length;i++) {
-				if(jsGraphAnnotate[ctx.ChartNewId][pieceOfChartFound[i].piece][0] == "ARC") highLightAction("ARC",ctx,data,config,jsGraphAnnotate[ctx.ChartNewId][pieceOfChartFound[i].piece][1],-1);
-				else highLightAction(jsGraphAnnotate[ctx.ChartNewId][pieceOfChartFound[i].piece][0],ctx,data,config,jsGraphAnnotate[ctx.ChartNewId][pieceOfChartFound[i].piece][1],jsGraphAnnotate[ctx.ChartNewId][pieceOfChartFound[i].piece][2]);
+			if(whoToReferHighLight!=-1) {
+				if(jsGraphAnnotate[ctx.ChartNewId][pieceOfChartFound[whoToReferHighLight].piece][0] == "ARC") highLightAction("ARC",ctx,data,config,jsGraphAnnotate[ctx.ChartNewId][pieceOfChartFound[whoToReferHighLight].piece][1],-1);
+				else highLightAction(jsGraphAnnotate[ctx.ChartNewId][pieceOfChartFound[whoToReferHighLight].piece][0],ctx,data,config,jsGraphAnnotate[ctx.ChartNewId][pieceOfChartFound[whoToReferHighLight].piece][1],jsGraphAnnotate[ctx.ChartNewId][pieceOfChartFound[whoToReferHighLight].piece][2]);
 			}
 		}
 	}
@@ -3478,10 +3502,10 @@ window.Chart = function(context) {
 			var prevTopPos = new Array();
 			var prevTopNeg = new Array();
 
-//			ctx.lineWidth = Math.ceil(ctx.chartLineScale*config.barStrokeWidth);
 			for (var i = 0; i < data.datasets.length; i++) {
 				if(data.datasets[i].type=="Line") continue;
 				for (var j = 0; j < data.datasets[i].data.length; j++) {
+					ctx.save();
 					ctx.lineWidth=Math.ceil(ctx.chartLineScale*setOptionValue(true,1,"BARSTROKEWIDTH",ctx,data,statData,data.datasets[i].barStrokeWidth,config.barStrokeWidth,"barStrokeWidth",i,j,{animationValue: currentAnimPc, xPosLeft : statData[i][j].xPosLeft, yPosBottom : botBar, xPosRight : statData[i][j].xPosRight, yPosTop : topBar} ));					
 					var currentAnimPc = animationCorrection(animPc, data, config, i, j, false).animVal;
 					if (currentAnimPc > 1) currentAnimPc = currentAnimPc - 1;
@@ -3491,21 +3515,11 @@ window.Chart = function(context) {
 						prevTopNeg[j]=statData[statData[i][j].firstNotMissing][j].yPosBottom;
 					}
 					var botBar, topBar;
-////					if(config.animationByDataset) {
-////						botBar=statData[i][j].yPosBottom;
-////						topBar=statData[i][j].yPosTop;
-////						topBar=botBar+currentAnimPc*(topBar-botBar);
-////					} else {
-						if(1*data.datasets[i].data[j] > 0) botBar=prevTopPos[j];
-						else botBar=prevTopNeg[j];
-//						botBar=statData[statData[i][j].firstNotMissing][j].yPosBottom - currentAnimPc*(statData[statData[i][j].firstNotMissing][j].yPosBottom-statData[i][j].yPosBottom);
-//						topBar=statData[statData[i][j].firstNotMissing][j].yPosBottom - currentAnimPc*(statData[statData[i][j].firstNotMissing][j].yPosBottom-statData[i][j].yPosTop);
-//						topBar=botBar+currentAnimPc*(statData[i][j].yPosTop-statData[i][j].yPosBottom);
-						topBar=botBar+currentAnimPc*(statData[i][j].yPosTop-statData[i][j].yPosBottom);
-						if(1*data.datasets[i].data[j] > 0) prevTopPos[j]=topBar;
-						else prevTopNeg[j]=topBar;
-						
-////					}
+					if(1*data.datasets[i].data[j] > 0) botBar=prevTopPos[j];
+					else botBar=prevTopNeg[j];
+					topBar=botBar+currentAnimPc*(statData[i][j].yPosTop-statData[i][j].yPosBottom);
+					if(1*data.datasets[i].data[j] > 0) prevTopPos[j]=topBar;
+					else prevTopNeg[j]=topBar;
 					ctx.fillStyle=setOptionValue(true,1,"COLOR",ctx,data,statData,data.datasets[i].fillColor,config.defaultFillColor,"fillColor",i,j,{animationValue: currentAnimPc, xPosLeft : statData[i][j].xPosLeft, yPosBottom : botBar, xPosRight : statData[i][j].xPosRight, yPosTop : topBar} );
 					ctx.strokeStyle=setOptionValue(true,1,"STROKECOLOR",ctx,data,statData,data.datasets[i].strokeColor,config.defaultStrokeColor,"strokeColor",i,j,{nullvalue : null} );
 
@@ -3525,6 +3539,7 @@ window.Chart = function(context) {
 						ctx.closePath();
 						ctx.fill();
 					}
+					ctx.restore();
 				}
 			}
 			drawLinesDataset(animPc, data, config, ctx, statData,{xAxisPosY : xAxisPosY,yAxisPosX : yAxisPosX, valueHop : valueHop, nbValueHop : data.labels.length });
@@ -4293,13 +4308,11 @@ window.Chart = function(context) {
 			var t1, t2, t3;
 
 
-//			ctx.lineWidth = Math.ceil(ctx.chartLineScale*config.barStrokeWidth);
 			for (var i = 0; i < data.datasets.length; i++) {
-//				ctx.lineWidth = Math.ceil(ctx.chartLineScale*config.barStrokeWidth);
-// ctx.lineWidth=Math.ceil(ctx.chartLineScale*setOptionValue(true,1,"BARSTROKEWIDTH",ctx,data,statData,data.datasets[i].barStrokeWidth,config.barStrokeWidth,"barStrokeWidth",i,j,{animationValue: currentAnimPc, xPosLeft : statData[i][j].xPosLeft, yPosBottom : statData[i][j].yPosBottom, xPosRight : statData[i][j].xPosLeft+barWidth, yPosTop : statData[i][j].yPosBottom-barHeight} ));				
 				if(data.datasets[i].type=="Line") continue;
 				for (var j = 0; j < data.datasets[i].data.length; j++) {
-ctx.lineWidth=Math.ceil(ctx.chartLineScale*setOptionValue(true,1,"BARSTROKEWIDTH",ctx,data,statData,data.datasets[i].barStrokeWidth,config.barStrokeWidth,"barStrokeWidth",i,j,{animationValue: currentAnimPc, xPosLeft : statData[i][j].xPosLeft, yPosBottom : statData[i][j].yPosBottom, xPosRight : statData[i][j].xPosLeft+barWidth, yPosTop : statData[i][j].yPosBottom-barHeight} ));				
+					ctx.save();
+					ctx.lineWidth=Math.ceil(ctx.chartLineScale*setOptionValue(true,1,"BARSTROKEWIDTH",ctx,data,statData,data.datasets[i].barStrokeWidth,config.barStrokeWidth,"barStrokeWidth",i,j,{animationValue: currentAnimPc, xPosLeft : statData[i][j].xPosLeft, yPosBottom : statData[i][j].yPosBottom, xPosRight : statData[i][j].xPosLeft+barWidth, yPosTop : statData[i][j].yPosBottom-barHeight} ));				
 					if (!(typeof(data.datasets[i].data[j]) == 'undefined')) {
 						var currentAnimPc = animationCorrection(animPc, data, config, i, j, false).animVal;
 						if (currentAnimPc > 1) currentAnimPc = currentAnimPc - 1;
@@ -4308,6 +4321,7 @@ ctx.lineWidth=Math.ceil(ctx.chartLineScale*setOptionValue(true,1,"BARSTROKEWIDTH
 						ctx.strokeStyle=setOptionValue(true,1,"STROKECOLOR",ctx,data,statData,data.datasets[i].strokeColor,config.defaultStrokeColor,"strokeColor",i,j,{nullvalue : null} );
 						roundRect(ctx, statData[i][j].xPosLeft, statData[i][j].yPosBottom, barWidth, barHeight, config.barShowStroke, config.barBorderRadius,i,j,(data.datasets[i].data[j] < 0 ? -1  : 1));
 					}
+					ctx.restore();
 				}
 			}
 			drawLinesDataset(animPc, data, config, ctx, statData,{xAxisPosY : xAxisPosY,yAxisPosX : yAxisPosX, valueHop : valueHop, nbValueHop : data.labels.length });
