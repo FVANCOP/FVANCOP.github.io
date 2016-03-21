@@ -5535,6 +5535,7 @@ ctx.lineWidth=Math.ceil(ctx.chartLineScale*setOptionValue(true,1,"BARSTROKEWIDTH
 //			if(typeof ctx.aspectRatio == "undefined") {
 //				ctx.aspectRatio = width / height;
 //			}
+		}
 
 
         	
