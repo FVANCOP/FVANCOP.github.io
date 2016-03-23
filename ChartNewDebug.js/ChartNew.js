@@ -503,6 +503,7 @@ if(config.responsive) {
 }
 
 	if (window.devicePixelRatio>1) {
+console.log("IN A");
 		ctx.canvas.style.width = newWidth + "px";
 		ctx.canvas.style.height = newHeight + "px";
 		ctx.canvas.height = newHeight * window.devicePixelRatio;
@@ -547,8 +548,14 @@ function updateChart(ctx,data,config,animation,runanimationcompletefunction) {
 	if (ctx.firstPass==9)
 	{
 		if (window.devicePixelRatio && !(config.responsive==true)){
+console.log("IN B");
+			if (window.devicePixelRatio > 1) {
+				ctx.canvas.style.width = newWidth + "px";
+				ctx.canvas.style.height = newHeight + "px";
+			}
 			ctx.canvas.width=ctx.canvas.width/window.devicePixelRatio;
 			ctx.canvas.height=ctx.canvas.height/window.devicePixelRatio;
+			context.scale(window.devicePixelRatio, window.devicePixelRatio);
 		}
 		
 		ctx.runanimationcompletefunction=runanimationcompletefunction;
@@ -1363,8 +1370,17 @@ window.Chart = function(context) {
     
 	//High pixel density displays - multiply the size of the canvas height/width by the device pixel ratio, then scale.
 	if (window.devicePixelRatio) {
+		if(window.devicePixelRatio > 1) {
+			var vh=height * window.devicePixelRatio;
+			var vw=width * window.devicePixelRatio;
+			context.canvas.style.width = vw + "px";
+			context.canvas.style.height = vh + "px";
+		}
+
+console.log("IN C "+vh+" "+vw+" "+window.devicePixelRatio);
 		context.canvas.height = height * window.devicePixelRatio;
 		context.canvas.width = width * window.devicePixelRatio;
+
 		context.scale(window.devicePixelRatio, window.devicePixelRatio);
 		width = context.canvas.width;
 		height = context.canvas.height;
@@ -7853,4 +7869,3 @@ function calculatePieDrawingSize(ctx,msr,config,data,statData) {
 		midPieY : midPieY
 	};
 };
-
