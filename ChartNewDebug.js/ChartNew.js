@@ -5050,7 +5050,7 @@ ctx.lineWidth=Math.ceil(ctx.chartLineScale*setOptionValue(true,1,"BARSTROKEWIDTH
 			if (1 * cntiter >= 1 * CapValue(config.animationSteps, Number.MAX_VALUE, 1) || config.animation == false || ctx.firstPass%10!=1) easeAdjustedAnimationPercent = 1;
 			else if (easeAdjustedAnimationPercent >= 1) easeAdjustedAnimationPercent = 0.9999;
 			if (config.animation && !(isIE() < 9 && isIE() != false) && config.clearRect) {
-window.alert("clear rect 2");
+// window.alert("clear rect 2");
 				ctx.clearRect(clrx, clry, clrwidth, clrheight);
 			}
 			dispCrossImage(ctx, config, midPosX, midPosY, borderX, borderY, false, data, easeAdjustedAnimationPercent, cntiter);
