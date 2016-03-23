@@ -534,9 +534,11 @@ function chartJsResize() {
 };
 
 function testRedraw(ctx,data,config) {
+window.alert("testRedraw A : "+ctx.firstPass);
 	if (ctx.firstPass>10) {
 		ctx.firstPass=2;
 		redrawGraph(ctx,data,config) ;
+window.alert("AFTER REDRAW");
 		return true;
 	} else {
 		return false;
