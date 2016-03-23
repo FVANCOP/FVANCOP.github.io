@@ -5094,9 +5094,12 @@ ctx.lineWidth=Math.ceil(ctx.chartLineScale*setOptionValue(true,1,"BARSTROKEWIDTH
 					}
 					window.setTimeout(animLoop, config.animationPauseTime*1000);
 				} else {
+window.alert("END OF ANIMATION 1");
 					if(!testRedraw(ctx,data,config)) {
 						if (typeof config.onAnimationComplete == "function" && ctx.runanimationcompletefunction==true) {
+window.alert("END OF ANIMATION 2");
 							config.onAnimationComplete(ctx, config, data, 1, animationCount + 1,statData);
+window.alert("END OF ANIMATION 3");
 							ctx.runanimationcompletefunction=false;
 						}
 					}
