@@ -5105,6 +5105,7 @@ window.alert("END OF ANIMATION 3");
 							ctx.runanimationcompletefunction=false;
 						}
 					}
+window.alert("FIN test REDRAW");
 					ctx.firstPass=9;
 				}
 				
