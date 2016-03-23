@@ -552,10 +552,10 @@ function updateChart(ctx,data,config,animation,runanimationcompletefunction) {
 		if (window.devicePixelRatio && !(config.responsive==true)){
 console.log("IN B");
 			if (window.devicePixelRatio > 1) {
-				var vw=ctx.canvas.width/window.devicePixelRatio;
-				var vh=ctx.canvas.height/window.devicePixelRatio;
-				ctx.canvas.style.width = vw + "px";
-				ctx.canvas.style.height = vh + "px";
+//				var vw=ctx.canvas.width/window.devicePixelRatio;
+//				var vh=ctx.canvas.height/window.devicePixelRatio;
+//				ctx.canvas.style.width = vw + "px";
+//				ctx.canvas.style.height = vh + "px";
 			}
 			ctx.canvas.width=ctx.canvas.width/window.devicePixelRatio;
 			ctx.canvas.height=ctx.canvas.height/window.devicePixelRatio;
@@ -2242,6 +2242,7 @@ console.log("IN C "+vh+" "+vw+" "+window.devicePixelRatio);
 		yAxisUnitBackgroundColor : "none"
 	};
 	var clear = function(c) {
+window.alert("BEFORE CLEAR 1");
 		c.clearRect(0, 0, width, height);
 	};
 
@@ -5048,7 +5049,10 @@ ctx.lineWidth=Math.ceil(ctx.chartLineScale*setOptionValue(true,1,"BARSTROKEWIDTH
 			var easeAdjustedAnimationPercent = (config.animation) ? CapValue(easingFunction(percentAnimComplete), null, 0) : 1;
 			if (1 * cntiter >= 1 * CapValue(config.animationSteps, Number.MAX_VALUE, 1) || config.animation == false || ctx.firstPass%10!=1) easeAdjustedAnimationPercent = 1;
 			else if (easeAdjustedAnimationPercent >= 1) easeAdjustedAnimationPercent = 0.9999;
-			if (config.animation && !(isIE() < 9 && isIE() != false) && config.clearRect) ctx.clearRect(clrx, clry, clrwidth, clrheight);
+			if (config.animation && !(isIE() < 9 && isIE() != false) && config.clearRect) {
+window.alert("clear rect 2");
+				ctx.clearRect(clrx, clry, clrwidth, clrheight);
+			}
 			dispCrossImage(ctx, config, midPosX, midPosY, borderX, borderY, false, data, easeAdjustedAnimationPercent, cntiter);
 			dispCrossText(ctx, config, midPosX, midPosY, borderX, borderY, false, data, easeAdjustedAnimationPercent, cntiter);
 			if(typeof config.beforeDrawFunction == "function") config.beforeDrawFunction("BEFOREDRAWFUNCTION",ctx,data,statData,-1,-1,{animationValue : easeAdjustedAnimationPercent, cntiter: cntiter, config : config, borderX : borderX, borderY : borderY, midPosX : midPosX, midPosY : midPosY});
@@ -5102,6 +5106,7 @@ window.alert("END OF ANIMATION 1");
 window.alert("END OF ANIMATION 2");
 							config.onAnimationComplete(ctx, config, data, 1, animationCount + 1,statData);
 window.alert("END OF ANIMATION 3");
+
 							ctx.runanimationcompletefunction=false;
 						}
 					}
@@ -6508,10 +6513,14 @@ window.alert("FIN test REDRAW");
 	function setRect(ctx, config) {
 		if (config.clearRect) {
 			if (!config.multiGraph) {
+window.alert("clear rect E");
+
 				clear(ctx);
 				ctx.clearRect(0, 0, width, height);
 			}
 		} else {
+window.alert("clear rect 3");
+
 			clear(ctx);
 			ctx.clearRect(0, 0, width, height);
 	
