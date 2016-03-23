@@ -557,7 +557,7 @@ console.log("IN B");
 			}
 			ctx.canvas.width=ctx.canvas.width/window.devicePixelRatio;
 			ctx.canvas.height=ctx.canvas.height/window.devicePixelRatio;
-			context.scale(window.devicePixelRatio, window.devicePixelRatio);
+			ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
 		}
 		
 		ctx.runanimationcompletefunction=runanimationcompletefunction;
