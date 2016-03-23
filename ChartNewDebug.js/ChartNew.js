@@ -550,8 +550,10 @@ function updateChart(ctx,data,config,animation,runanimationcompletefunction) {
 		if (window.devicePixelRatio && !(config.responsive==true)){
 console.log("IN B");
 			if (window.devicePixelRatio > 1) {
-				ctx.canvas.style.width = newWidth + "px";
-				ctx.canvas.style.height = newHeight + "px";
+				var vw=ctx.canvas.width/window.devicePixelRatio;
+				var wh=ctx.canvas.height/window.devicePixelRatio;
+				ctx.canvas.style.width = vw + "px";
+				ctx.canvas.style.height = vh + "px";
 			}
 			ctx.canvas.width=ctx.canvas.width/window.devicePixelRatio;
 			ctx.canvas.height=ctx.canvas.height/window.devicePixelRatio;
