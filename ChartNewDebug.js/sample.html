@@ -3,14 +3,14 @@
 
 
 
-<!--[if lte IE 8]><SCRIPT src='source/excanvas.js'></script><![endif]--><SCRIPT src='../ChartNew.js'></script>
+<!--[if lte IE 8]><SCRIPT src='source/excanvas.js'></script><![endif]--><SCRIPT src='ChartNew.js'></script>
+<SCRIPT src='Add-ins/shapesInChart.js'></script>
 
 
 <SCRIPT>
 
 defCanvasWidth=1200;
 defCanvasHeight=600;
-
 
 
 var mydata1 = {
@@ -22,7 +22,7 @@ var mydata1 = {
 			pointColor : "rgba(220,220,220,1)",
 			pointStrokeColor : "#fff",
 			data : [0.65,0.59,0.90,0.81,0.56,0.55,0.40],
-      title : "pFirst data"
+      			title : "pFirst data"
 		},
 		{
 			fillColor : "rgba(151,187,205,0.5)",
@@ -30,7 +30,7 @@ var mydata1 = {
 			pointColor : "rgba(151,187,205,1)",
 			pointStrokeColor : "#fff",
 			data : [0.28,0.48,0.40,0.19,0.96,0.27,1.00],
-      title : "pSecond data"
+			title : "pSecond data"
 		}
 	]
 }
@@ -73,35 +73,27 @@ var mydata2 = {
 };
 
 
- 
-function annotateAllX(area,ctx,data,statData,posi,posj,othervars) {
-	var retstring="";
-	if(ctx.tpchart=="Pie" || ctx.tpchart=="Doughnut" || ctx.tpchart=="PolarArea") {
-		for(i=0;i<data.length;i++)
-		{
-			retstring=retstring+statData[i].v1+"="+statData[i].v3+"<BR>";
-		}
-
-	} else {
-		if(statData[posi][posj].v2!="")retstring=statData[posi][posj].v2+'<BR>';
-		for(var i=0;i<data.datasets.length;i++){
-			if(typeof statData[i][posj].v3!="undefined")retstring=retstring+statData[i][posj].v1+"="+statData[i][posj].v3+"<BR>";
-		}
-	}
-	return "<%='"+retstring+"'%>";
-}
-
 var newopts = {
-      inGraphDataShow : true,
-      annotateDisplay : true, 
-      rotateLabels : "smart",
-      annotateLabel: annotateAllX,
-      pointHitDetectionRadius : 10,
-      detectAnnotateOnFullLine : true
+	inGraphDataShow : true,
+	datasetFill : true,
+	scaleLabel: "<%=value%>",
+	scaleFontSize : 16,
+	canvasBorders : true,
+	graphTitle : "Sample ChartNew.js",
+	graphTitleFontFamily : "'Arial'",
+	graphTitleFontSize : 24,
+	graphTitleFontStyle : "bold",
+	graphTitleFontColor : "#666",
+	footNote : "Footnote for the graph",
+	legend : true,
+	yAxisLabel : "Y Axis Label",
+	xAxisLabel : "X Axis Label",
+	yAxisUnit : "Y Unit",
+	annotateDisplay : true, 
+	dynamicDisplay : true
 }
 
 
-                     
 
 </SCRIPT>
 
@@ -110,7 +102,6 @@ var newopts = {
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 	<head>
 		<title>Demo ChartNew.js</title>
-
 	</head>
 	<body>
   
@@ -131,25 +122,21 @@ var newopts = {
       document.write("<canvas id=\"canvas_polararea\" height=\""+defCanvasHeight+"\" width=\""+defCanvasWidth+"\"></canvas>");
       document.write("<canvas id=\"canvas_pie\" height=\""+defCanvasHeight+"\" width=\""+defCanvasWidth+"\"></canvas>");
       document.write("<canvas id=\"canvas_doughnut\" height=\""+defCanvasHeight+"\" width=\""+defCanvasWidth+"\"></canvas>");
-
-
-    setopts=newopts;
     
 
 window.onload = function() {
 
 
     if(1==1) {
-    var myLine = new Chart(document.getElementById("canvas_line").getContext("2d")).Line(mydata1,setopts);
-    var myLine = new Chart(document.getElementById("canvas_bar").getContext("2d")).Bar(mydata1,setopts);
-    var myLine = new Chart(document.getElementById("canvas_stackedbar").getContext("2d")).StackedBar(mydata1,setopts);
-    var myLine = new Chart(document.getElementById("canvas_horizontalbar").getContext("2d")).HorizontalBar(mydata1,setopts);
-    var myLine = new Chart(document.getElementById("canvas_horizontalstackedbar").getContext("2d")).HorizontalStackedBar(mydata1,setopts);
-    var myLine = new Chart(document.getElementById("canvas_radar").getContext("2d")).Radar(mydata1,setopts);
-    
-    var myLine = new Chart(document.getElementById("canvas_polararea").getContext("2d")).PolarArea(mydata2,setopts);
-    var myLine = new Chart(document.getElementById("canvas_pie").getContext("2d")).Pie(mydata2,setopts);
-    var myLine = new Chart(document.getElementById("canvas_doughnut").getContext("2d")).Doughnut(mydata2,setopts);
+    var myLine = new Chart(document.getElementById("canvas_line").getContext("2d")).Line(mydata1,newopts);
+    var myLine = new Chart(document.getElementById("canvas_bar").getContext("2d")).Bar(mydata1,newopts);
+    var myLine = new Chart(document.getElementById("canvas_stackedbar").getContext("2d")).StackedBar(mydata1,newopts);
+    var myLine = new Chart(document.getElementById("canvas_horizontalbar").getContext("2d")).HorizontalBar(mydata1,newopts);
+    var myLine = new Chart(document.getElementById("canvas_horizontalstackedbar").getContext("2d")).HorizontalStackedBar(mydata1,newopts);
+    var myLine = new Chart(document.getElementById("canvas_radar").getContext("2d")).Radar(mydata1,newopts);
+    var myLine = new Chart(document.getElementById("canvas_polararea").getContext("2d")).PolarArea(mydata2,newopts);
+    var myLine = new Chart(document.getElementById("canvas_pie").getContext("2d")).Pie(mydata2,newopts);
+    var myLine = new Chart(document.getElementById("canvas_doughnut").getContext("2d")).Doughnut(mydata2,newopts);
     }
 
 }
