@@ -8074,7 +8074,7 @@ if(generate)console.log('     datasets : [');
 	for(var i=0;i<data.length;i++){
 if(generate)console.log("           {")
 		newData.datasets[i]={
-			data : [],
+			data : []
 //			fillColor : "",
 //			title : ""
 			
