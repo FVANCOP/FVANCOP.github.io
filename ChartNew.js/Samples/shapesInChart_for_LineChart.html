@@ -48,10 +48,10 @@ var mydata1 = {
 			fillColor: "rgba(220,0,100,0.2)",
 			strokeColor : "rgba(0,0,0,0)",
 			animate : false,
-			x1: -Number.MAX_VALUE,
+			x1: -999,
 			y1: "<%=#mean#-#standard_deviation#%>",
-			x2: Number.MAX_VALUE	,
-			y2: -Number.MAX_VALUE
+			x2: +999	,
+			y2: -999
 		},
 		{
 			position : "INCHART",
@@ -59,9 +59,9 @@ var mydata1 = {
 			fillColor: "rgba(220,100,200,0.2)",
 			strokeColor : "rgba(0,0,0,0)",
 			animate : false,
-			x1: -Number.MAX_VALUE,
+			x1: -999,
 			y1: "<%=#mean#%>",
-			x2: Number.MAX_VALUE,
+			x2: +999	,
 			y2: "<%=#mean#-#standard_deviation#%>"
 		},
 		{
@@ -70,9 +70,9 @@ var mydata1 = {
 			fillColor: "rgba(120,0,100,0.2)",
 			strokeColor : "rgba(0,0,0,0)",
 			animate : false,
-			x1: -Number.MAX_VALUE,
+			x1: -999,
 			y1: "<%=#mean#%>",
-			x2: Number.MAX_VALUE,
+			x2: +999	,
 			y2: "<%=#mean#+#standard_deviation#%>"
 		},
 		{
@@ -81,19 +81,19 @@ var mydata1 = {
 			fillColor: "rgba(120,100,200,0.2)",
 			strokeColor : "rgba(0,0,0,0)",
 			animate : false,
-			x1: -Number.MAX_VALUE,
+			x1: -999,
 			y1: "<%=#mean#+#standard_deviation#%>",
-			x2: Number.MAX_VALUE,
-			y2: Number.MAX_VALUE
+			x2: +999	,
+			y2: +999
 		},
 		{
 			position : "INCHART",
 			shape: "LINE",
 			strokeStyle : "dashSpace",
 			animate : false,
-			x1: -Number.MAX_VALUE,
+			x1: -999,
 			y1: "<%=#mean#%>",
-			x2: Number.MAX_VALUE,
+			x2: +999	,
 			y2: "<%=#mean#%>"
 		},
 		{
@@ -377,7 +377,7 @@ var mydata1 = {
 var opt1 = {
 	datasetFill : false,
 	graphMin : 0,
-	spaceRight : 110,
+	spaceRight : 130,
 	barValueSpacing : 20,
 	canvasBorders : true,
 	legend : true,
