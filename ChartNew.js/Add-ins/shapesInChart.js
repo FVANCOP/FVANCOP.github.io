@@ -78,7 +78,7 @@ var drawShape_default= {
 	textBorders : false,
 	textBordersColor : "black",
 	textBordersWidth : 1,
-	textBordersSelection : 1,
+	textBordersSelection : 15,
 	textBordersRadius : 0,
 	textBordersXSpace : 3,
 	textBordersYSpace : 3,
