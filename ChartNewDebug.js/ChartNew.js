@@ -567,11 +567,17 @@ function resizeCtx(ctx,config)
 		if(typeof config.responsiveMinHeight  == "undefined")config.responsiveMinHeight=0;
 		if(typeof config.responsiveMaxWidth  == "undefined")config.responsiveMaxWidth=9999999;
 		if(typeof config.responsiveMaxHeight  == "undefined")config.responsiveMaxHeight=9999999;
-		var canvas = ctx.canvas;
+		var canvas;
+    if(typeof ctx.vctx != "undefined"){
+      canvas=ctx.vctx.canvas;
+    }
+    else {
+      canvas=ctx.canvas;
+    }
 		if(typeof ctx.aspectRatio == "undefined") {
 			ctx.aspectRatio = canvas.width / canvas.height;
 		}
-  		var newWidth = getMaximumWidth(canvas);
+  	var newWidth = getMaximumWidth(canvas);
 		var newHeight = config.maintainAspectRatio ? newWidth / ctx.aspectRatio : getMaximumHeight(canvas);
 		newWidth=Math.min(config.responsiveMaxWidth,Math.max(config.responsiveMinWidth,newWidth));
 		newHeight=Math.min(config.responsiveMaxHeight,Math.max(config.responsiveMinHeight,newHeight));
@@ -585,7 +591,7 @@ function resizeCtx(ctx,config)
 			ctx.chartLineScale=ctx.DefaultchartLineScale*(newWidth/ctx.initialWidth);
 			ctx.chartSpaceScale=ctx.DefaultchartSpaceScale*(newWidth/ctx.initialWidth);
 		}
-		
+		                                                                                                            
 		if (window.devicePixelRatio>1) {
 			ctx.canvas.style.width = newWidth + "px";
 			ctx.canvas.style.height = newHeight + "px";
@@ -655,16 +661,17 @@ function updateChart(ctx,data,config,animation,runanimationcompletefunction) {
 
 
 function redrawGraph(ctx,data,config) {
-
   var OSC;
   var tmpctx;
 
   if(ctx.firstPass==2 || ctx.firstPass==9) {
-    OSC= document.createElement("canvas");
-    OSC= document.createElement("canvas");
+    OSC=  document.createElement("canvas");
+    tmpctx=OSC.getContext("2d");
+    tmpctx.vctx=ctx;
+
     OSC.width=ctx.canvas.width;
     OSC.height=ctx.canvas.height;
-    tmpctx=OSC.getContext("2d");
+    tmpctx.ChartNewId=ctx.ChartNewId;
     tmpctx.tpchart=ctx.tpchart;
     tmpctx.tpdata=ctx.tpdata;
     tmpctx.initialWidth=ctx.initialWidth;
@@ -673,7 +680,6 @@ function redrawGraph(ctx,data,config) {
     tmpctx.chartSpaceScale=ctx.chartSpaceScale;
     tmpctx.firstPass=ctx.firstPass;
     tmpctx.runanimationcompletefunction=ctx.runanimationcompletefunction;
-    tmpctx.ChartNewId=ctx.ChartNewId;
     tmpctx.aspectRatio=ctx.aspectRatio;
     tmpctx.widthAtSetMeasures=ctx.widthAtSetMeasures;
     tmpctx.heightAtSetMeasures=ctx.heightAtSetMeasures;
@@ -695,6 +701,9 @@ function redrawGraph(ctx,data,config) {
     ctx.aspectRatio=tmpctx.aspectRatio;
     ctx.widthAtSetMeasures=tmpctx.widthAtSetMeasures;
     ctx.heightAtSetMeasures=tmpctx.heightAtSetMeasures;
+    ctx.canvas.width=tmpctx.canvas.width;
+    ctx.canvas.height=tmpctx.canvas.height;
+
 
    ctx.clearRect(0,0,ctx.canvas.width,ctx.canvas.height);
    ctx.drawImage(OSC,0,0); 
