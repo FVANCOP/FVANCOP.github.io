@@ -682,7 +682,8 @@ function redrawGraph(ctx,data,config) {
 //  var OSC;
 //  var tmpctx;
 
-  if((ctx.firstPass==2 || ctx.firstPass==9) && !(isIE() < 9 && isIE() != false)) {    
+  if((ctx.firstPass==2 || ctx.firstPass==9) && !(isIE() < 9 && isIE() != false) && (navigator.userAgent.indexOf("Safari")==-1)) {    
+window.alert("IN NEW FONCTION");
     if(typeof OSC[ctx.ChartNewID]=="undefined") {
       OSC[ctx.ChartNewID]=  document.createElement("canvas");
       tmpctx[ctx.ChartNewID]=OSC[ctx.ChartNewID].getContext("2d");
