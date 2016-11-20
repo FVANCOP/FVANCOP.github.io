@@ -682,7 +682,7 @@ function redrawGraph(ctx,data,config) {
   var tmpctx;
 
   if((ctx.firstPass==2 || ctx.firstPass==9) && cntdraw==0) {
-	  
+cntdraw++;	  
     OSC=  document.createElement("canvas");
     tmpctx=OSC.getContext("2d");
     tmpctx.vctx=ctx;
