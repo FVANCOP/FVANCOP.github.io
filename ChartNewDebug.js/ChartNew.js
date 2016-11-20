@@ -726,7 +726,8 @@ window.alert("Before Redraw");
 window.alert("After Redraw");
 
 	  drawImageTest(tmpctx);
-	  ctx.drawIMage(OSC,0,0);
+	  ctx.drawImage(OSC,0,0);
+window.alert("After testImage");
   
    } else {
      	 var myGraph = new Chart(ctx);	
