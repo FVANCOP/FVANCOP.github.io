@@ -704,11 +704,11 @@ function redrawGraph(ctx,data,config) {
     ctx.canvas.width=tmpctx.canvas.width;
     ctx.canvas.height=tmpctx.canvas.height;
 
-msgbox "Before Clear";
+window.alert( "Before Clear");
    ctx.clearRect(0,0,ctx.canvas.width,ctx.canvas.height);
-msgbox "Before Redraw";
+window.alert("Before Redraw");
 	  ctx.drawImage(OSC,0,0);
-msgbox "After Redraw";
+window.alert("After Redraw");
   
    } else {
      	 var myGraph = new Chart(ctx);	
