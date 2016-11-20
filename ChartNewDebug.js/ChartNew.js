@@ -681,9 +681,7 @@ function redrawGraph(ctx,data,config) {
   var OSC;
   var tmpctx;
 
-  if(ctx.firstPass==2 || ctx.firstPass==9) {
-
-var savedCanvas=ctx.canvas;	  
+  if((ctx.firstPass==2 || ctx.firstPass==9) && cntdraw==0) {
 	  
     OSC=  document.createElement("canvas");
     tmpctx=OSC.getContext("2d");
@@ -743,7 +741,7 @@ window.alert("After testImage");
 
 //	  drawImageTest(ctx);
 window.alert("After drawImage 2");
-//ctx.canvas=savedCanvas;
+
    } else {
      	 var myGraph = new Chart(ctx);	
           eval("myGraph."+ctx.tpchart+"(data,config);");
