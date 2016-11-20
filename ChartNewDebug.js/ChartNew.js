@@ -1020,7 +1020,9 @@ function highLightAction(action,ctx,data,config,v1,v2) {
 		}
 	}
 	if(redisplay==true) {
+		window.alert("before updateChart in Highlightaction");
  		updateChart(ctx,data,config,false,config.highLightRerunEndFunction);
+		window.alert("after updateChart in Highlightaction");
 	}
 };
 
