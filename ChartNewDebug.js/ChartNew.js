@@ -678,9 +678,10 @@ window.alert("REDRAWGRAPH in updateChart");
 var cntdraw=-1;
 
 function redrawGraph(ctx,data,config) {
-  var OSC;
-  var tmpctx;
+//  var OSC;
+//  var tmpctx;
 cntdraw++;
+	
   if((ctx.firstPass==2 || ctx.firstPass==9) && (cntdraw%2)==0) {
 	  
     OSC=  document.createElement("canvas");
@@ -689,6 +690,7 @@ cntdraw++;
 
     OSC.width=ctx.canvas.width;
     OSC.height=ctx.canvas.height;
+	  
     tmpctx.ChartNewId=ctx.ChartNewId;
     tmpctx.tpchart=ctx.tpchart;
     tmpctx.tpdata=ctx.tpdata;
@@ -705,28 +707,23 @@ cntdraw++;
     var myGraph = new Chart(tmpctx);	
         eval("myGraph."+ctx.tpchart+"(data,config);");
 
-   ctx.firstPass=tmpctx.firstPass;
-
-
-// ctx.canvas=tmpctx.canvas;
-	  
-//    var myGraph = new Chart(ctx);	
-//        eval("myGraph."+ctx.tpchart+"(data,config);");
-
-//    ctx.tpchart=tmpctx.tpchart;
-//    ctx.tpdata=tmpctx.tpdata;
-//    ctx.initialWidth=tmpctx.initialWidth;
-//    ctx.chartTextScale=tmpctx.chartTextScale;
-//    ctx.chartLineScale=tmpctx.chartLineScale;
-//    ctx.chartSpaceScale=tmpctx.chartSpaceScale;
-//    ctx.runanimationcompletefunction=tmpctx.runanimationcompletefunction;
-//    ctx.ChartNewId=tmpctx.ChartNewId;
-//    ctx.aspectRatio=tmpctx.aspectRatio;
-//    ctx.widthAtSetMeasures=tmpctx.widthAtSetMeasures;
-//    ctx.heightAtSetMeasures=tmpctx.heightAtSetMeasures;
+    ctx.firstPass=tmpctx.firstPass;
+    ctx.tpchart=tmpctx.tpchart;
+    ctx.tpdata=tmpctx.tpdata;
+    ctx.initialWidth=tmpctx.initialWidth;
+    ctx.chartTextScale=tmpctx.chartTextScale;
+    ctx.chartLineScale=tmpctx.chartLineScale;
+    ctx.chartSpaceScale=tmpctx.chartSpaceScale;
+    ctx.runanimationcompletefunction=tmpctx.runanimationcompletefunction;
+    ctx.ChartNewId=tmpctx.ChartNewId;
+    ctx.aspectRatio=tmpctx.aspectRatio;
+    ctx.widthAtSetMeasures=tmpctx.widthAtSetMeasures;
+    ctx.heightAtSetMeasures=tmpctx.heightAtSetMeasures;
     ctx.canvas.width=tmpctx.canvas.width;
     ctx.canvas.height=tmpctx.canvas.height;
 
+	  OSC=undefined;
+	  tmpctx=undefined;
 	  
 window.alert( "Before Clear");
    ctx.clearRect(0,0,ctx.canvas.width,ctx.canvas.height);
