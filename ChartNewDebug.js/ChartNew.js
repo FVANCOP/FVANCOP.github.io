@@ -727,9 +727,13 @@ window.alert("Before Redraw");
 window.alert("After Redraw");
 
 	  drawImageTest(tmpctx);
-	  ctx.drawImage(OSC,0,0);
+	  ctx.drawImage(OSC,100,100);
+	  
 window.alert("After testImage");
-  
+
+	  drawImageText(ctx);
+window.alert("After drawImage 2");
+	  
    } else {
      	 var myGraph = new Chart(ctx);	
           eval("myGraph."+ctx.tpchart+"(data,config);");
