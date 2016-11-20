@@ -707,6 +707,8 @@ var savedCanvas=ctx.canvas;
     var myGraph = new Chart(tmpctx);	
         eval("myGraph."+ctx.tpchart+"(data,config);");
 
+   ctx.firstPass=tmpctx.firstPass;
+
 
 // ctx.canvas=tmpctx.canvas;
 	  
@@ -719,14 +721,13 @@ var savedCanvas=ctx.canvas;
 //    ctx.chartTextScale=tmpctx.chartTextScale;
 //    ctx.chartLineScale=tmpctx.chartLineScale;
 //    ctx.chartSpaceScale=tmpctx.chartSpaceScale;
-//    ctx.firstPass=tmpctx.firstPass;
 //    ctx.runanimationcompletefunction=tmpctx.runanimationcompletefunction;
 //    ctx.ChartNewId=tmpctx.ChartNewId;
 //    ctx.aspectRatio=tmpctx.aspectRatio;
 //    ctx.widthAtSetMeasures=tmpctx.widthAtSetMeasures;
 //    ctx.heightAtSetMeasures=tmpctx.heightAtSetMeasures;
-//    ctx.canvas.width=tmpctx.canvas.width;
-//    ctx.canvas.height=tmpctx.canvas.height;
+    ctx.canvas.width=tmpctx.canvas.width;
+    ctx.canvas.height=tmpctx.canvas.height;
 
 	  
 window.alert( "Before Clear");
