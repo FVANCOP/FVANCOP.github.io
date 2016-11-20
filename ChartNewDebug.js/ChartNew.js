@@ -4692,6 +4692,7 @@ window.Chart = function(context) {
 			animationLoop(config,msr.legendMsr, drawScale, drawBars, ctx, msr.clrx, msr.clry, msr.clrwidth, msr.clrheight, yAxisPosX + msr.availableWidth / 2, xAxisPosY - msr.availableHeight / 2, yAxisPosX, xAxisPosY, data, statData);
 
 		} else {
+window.alert("BLANK DRAW");f
 			testRedraw(ctx,data,config);
 			ctx.firstPass=9;
 		}
