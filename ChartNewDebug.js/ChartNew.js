@@ -722,9 +722,7 @@ cntdraw++;
     ctx.canvas.width=tmpctx.canvas.width;
     ctx.canvas.height=tmpctx.canvas.height;
 
-	  OSC=undefined;
-	  tmpctx=undefined;
-	  
+  
 window.alert( "Before Clear");
    ctx.clearRect(0,0,ctx.canvas.width,ctx.canvas.height);
 window.alert("Before Redraw");
