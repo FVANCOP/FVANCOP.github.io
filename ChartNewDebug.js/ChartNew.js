@@ -708,7 +708,7 @@ var savedCanvas=ctx.canvas;
         eval("myGraph."+ctx.tpchart+"(data,config);");
 
 
-ctx.canvas=tmpctx.canvas;
+// ctx.canvas=tmpctx.canvas;
 	  
 //    var myGraph = new Chart(ctx);	
 //        eval("myGraph."+ctx.tpchart+"(data,config);");
@@ -730,9 +730,9 @@ ctx.canvas=tmpctx.canvas;
 
 	  
 window.alert( "Before Clear");
-//   ctx.clearRect(0,0,ctx.canvas.width,ctx.canvas.height);
+   ctx.clearRect(0,0,ctx.canvas.width,ctx.canvas.height);
 window.alert("Before Redraw");
-//	  ctx.drawImage(OSC,0,0);
+   ctx.drawImage(OSC,0,0);
 window.alert("After Redraw");
 
 //	  drawImageTest(tmpctx);
