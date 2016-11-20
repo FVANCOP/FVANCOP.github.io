@@ -675,14 +675,14 @@ window.alert("REDRAWGRAPH in updateChart");
 	}
 };
 
-var cntdraw=0;
+var cntdraw=-1;
 
 function redrawGraph(ctx,data,config) {
   var OSC;
   var tmpctx;
-
+cntdraw++;
   if((ctx.firstPass==2 || ctx.firstPass==9) && (cntdraw%2)==0) {
-cntdraw++;	  
+	  
     OSC=  document.createElement("canvas");
     tmpctx=OSC.getContext("2d");
     tmpctx.vctx=ctx;
