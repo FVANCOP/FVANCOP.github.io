@@ -35,6 +35,7 @@
 // ctx.firstPass=9 : chart is completely drawn;
 // If chartJsResize called : increment the value of ctx.firstPass with a value of 10.
 
+
 // non standard functions;
 
 var chartJSLineStyle=[];
@@ -654,7 +655,6 @@ function updateChart(ctx,data,config,animation,runanimationcompletefunction) {
 				}
 			}
 		}
-		
 		redrawGraph(ctx,data,config);
 	}
 };
@@ -666,7 +666,7 @@ function redrawGraph(ctx,data,config) {
 //  var OSC;
 //  var tmpctx;
 
-  if((ctx.firstPass==2 || ctx.firstPass==9) && !(isIE() < 9 && isIE() != false) && (navigator.userAgent.indexOf("Safari")==-1)) {    
+  if((ctx.firstPass==2 || ctx.firstPass==9) && !(isIE() < 9 && isIE() != false)) {    
     if(typeof OSC[ctx.ChartNewID]=="undefined") {
       OSC[ctx.ChartNewID]=  document.createElement("canvas");
       tmpctx[ctx.ChartNewID]=OSC[ctx.ChartNewID].getContext("2d");
