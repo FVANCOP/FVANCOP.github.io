@@ -36,7 +36,7 @@
 // If chartJsResize called : increment the value of ctx.firstPass with a value of 10.
 
 function drawImageTest(g) {
-   ctx.strokeStyle = "#800";
+   g.strokeStyle = "#800";
    g.beginPath();
    var ct = 90;
    for (var i = 0; i < ct; i++) {
