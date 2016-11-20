@@ -708,8 +708,10 @@ var savedCanvas=ctx.canvas;
         eval("myGraph."+ctx.tpchart+"(data,config);");
 
 
-    var myGraph = new Chart(ctx);	
-        eval("myGraph."+ctx.tpchart+"(data,config);");
+ctx.canvas=tmpctx.canvas;
+	  
+//    var myGraph = new Chart(ctx);	
+//        eval("myGraph."+ctx.tpchart+"(data,config);");
 
 //    ctx.tpchart=tmpctx.tpchart;
 //    ctx.tpdata=tmpctx.tpdata;
