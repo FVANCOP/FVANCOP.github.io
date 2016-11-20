@@ -706,23 +706,23 @@ var savedCanvas=ctx.canvas;
 
 
 
- 	 var myGraph = new Chart(tmpctx);	
+ 	 var myGraph = new Chart(ctx);	
         eval("myGraph."+ctx.tpchart+"(data,config);");
 
-    ctx.tpchart=tmpctx.tpchart;
-    ctx.tpdata=tmpctx.tpdata;
-    ctx.initialWidth=tmpctx.initialWidth;
-    ctx.chartTextScale=tmpctx.chartTextScale;
-    ctx.chartLineScale=tmpctx.chartLineScale;
-    ctx.chartSpaceScale=tmpctx.chartSpaceScale;
-    ctx.firstPass=tmpctx.firstPass;
-    ctx.runanimationcompletefunction=tmpctx.runanimationcompletefunction;
-    ctx.ChartNewId=tmpctx.ChartNewId;
-    ctx.aspectRatio=tmpctx.aspectRatio;
-    ctx.widthAtSetMeasures=tmpctx.widthAtSetMeasures;
-    ctx.heightAtSetMeasures=tmpctx.heightAtSetMeasures;
-    ctx.canvas.width=tmpctx.canvas.width;
-    ctx.canvas.height=tmpctx.canvas.height;
+//    ctx.tpchart=tmpctx.tpchart;
+//    ctx.tpdata=tmpctx.tpdata;
+//    ctx.initialWidth=tmpctx.initialWidth;
+//    ctx.chartTextScale=tmpctx.chartTextScale;
+//    ctx.chartLineScale=tmpctx.chartLineScale;
+//    ctx.chartSpaceScale=tmpctx.chartSpaceScale;
+//    ctx.firstPass=tmpctx.firstPass;
+//    ctx.runanimationcompletefunction=tmpctx.runanimationcompletefunction;
+//    ctx.ChartNewId=tmpctx.ChartNewId;
+//    ctx.aspectRatio=tmpctx.aspectRatio;
+//    ctx.widthAtSetMeasures=tmpctx.widthAtSetMeasures;
+//    ctx.heightAtSetMeasures=tmpctx.heightAtSetMeasures;
+//    ctx.canvas.width=tmpctx.canvas.width;
+//    ctx.canvas.height=tmpctx.canvas.height;
 
 	  
 window.alert( "Before Clear");
