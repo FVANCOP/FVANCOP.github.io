@@ -675,68 +675,61 @@ window.alert("REDRAWGRAPH in updateChart");
 	}
 };
 
-var cntdraw=-1;
+var OSC=[];
+var tmpctx=[];
 
 function redrawGraph(ctx,data,config) {
 //  var OSC;
 //  var tmpctx;
-cntdraw++;
-	
-  if((ctx.firstPass==2 || ctx.firstPass==9) && !(isIE() < 9 && isIE() != false) && (cntdraw%2)!=3) {
-	  
-    OSC=  document.createElement("canvas");
-    tmpctx=OSC.getContext("2d");
-    tmpctx.vctx=ctx;
 
-    OSC.width=ctx.canvas.width;
-    OSC.height=ctx.canvas.height;
-	  
-    tmpctx.ChartNewId=ctx.ChartNewId;
-    tmpctx.tpchart=ctx.tpchart;
-    tmpctx.tpdata=ctx.tpdata;
-    tmpctx.initialWidth=ctx.initialWidth;
-    tmpctx.chartTextScale=ctx.chartTextScale;
-    tmpctx.chartLineScale=ctx.chartLineScale;
-    tmpctx.chartSpaceScale=ctx.chartSpaceScale;
-    tmpctx.firstPass=ctx.firstPass;
-    tmpctx.runanimationcompletefunction=ctx.runanimationcompletefunction;
-    tmpctx.aspectRatio=ctx.aspectRatio;
-    tmpctx.widthAtSetMeasures=ctx.widthAtSetMeasures;
-    tmpctx.heightAtSetMeasures=ctx.heightAtSetMeasures;
+  if((ctx.firstPass==2 || ctx.firstPass==9) && !(isIE() < 9 && isIE() != false)) {    
+    if(typeof OSC[ctx.ChartNewID]=="undefined") {
+      OSC[ctx.ChartNewID]=  document.createElement("canvas");
+      tmpctx[ctx.ChartNewID]=OSC[ctx.ChartNewID].getContext("2d");
+    }
+//    OSC=  document.createElement("canvas");
+//    tmpctx=OSC.getContext("2d");
+    tmpctx[ctx.ChartNewID].vctx=ctx;
 
-    var myGraph = new Chart(tmpctx);	
-        eval("myGraph."+ctx.tpchart+"(data,config);");
+    OSC[ctx.ChartNewID].width=ctx.canvas.width;
+    OSC[ctx.ChartNewID].height=ctx.canvas.height;
+    tmpctx[ctx.ChartNewID].ChartNewId=ctx.ChartNewId;
+    tmpctx[ctx.ChartNewID].tpchart=ctx.tpchart;
+    tmpctx[ctx.ChartNewID].tpdata=ctx.tpdata;
+    tmpctx[ctx.ChartNewID].initialWidth=ctx.initialWidth;
+    tmpctx[ctx.ChartNewID].chartTextScale=ctx.chartTextScale;
+    tmpctx[ctx.ChartNewID].chartLineScale=ctx.chartLineScale;
+    tmpctx[ctx.ChartNewID].chartSpaceScale=ctx.chartSpaceScale;
+    tmpctx[ctx.ChartNewID].firstPass=ctx.firstPass;
+    tmpctx[ctx.ChartNewID].runanimationcompletefunction=ctx.runanimationcompletefunction;
+    tmpctx[ctx.ChartNewID].aspectRatio=ctx.aspectRatio;
+    tmpctx[ctx.ChartNewID].widthAtSetMeasures=ctx.widthAtSetMeasures;
+    tmpctx[ctx.ChartNewID].heightAtSetMeasures=ctx.heightAtSetMeasures;
 
-    ctx.firstPass=tmpctx.firstPass;
-    ctx.tpchart=tmpctx.tpchart;
-    ctx.tpdata=tmpctx.tpdata;
-    ctx.initialWidth=tmpctx.initialWidth;
-    ctx.chartTextScale=tmpctx.chartTextScale;
-    ctx.chartLineScale=tmpctx.chartLineScale;
-    ctx.chartSpaceScale=tmpctx.chartSpaceScale;
-    ctx.runanimationcompletefunction=tmpctx.runanimationcompletefunction;
-    ctx.ChartNewId=tmpctx.ChartNewId;
-    ctx.aspectRatio=tmpctx.aspectRatio;
-    ctx.widthAtSetMeasures=tmpctx.widthAtSetMeasures;
-    ctx.heightAtSetMeasures=tmpctx.heightAtSetMeasures;
-    ctx.canvas.width=tmpctx.canvas.width;
-    ctx.canvas.height=tmpctx.canvas.height;
 
-  
-window.alert( "Before Clear");
+
+ 	 var myGraph = new Chart(tmpctx[ctx.ChartNewID]);	
+        eval("myGraph."+tmpctx[ctx.ChartNewID].tpchart+"(data,config);");
+
+    ctx.tpchart=tmpctx[ctx.ChartNewID].tpchart;
+    ctx.tpdata=tmpctx[ctx.ChartNewID].tpdata;
+    ctx.initialWidth=tmpctx[ctx.ChartNewID].initialWidth;
+    ctx.chartTextScale=tmpctx[ctx.ChartNewID].chartTextScale;
+    ctx.chartLineScale=tmpctx[ctx.ChartNewID].chartLineScale;
+    ctx.chartSpaceScale=tmpctx[ctx.ChartNewID].chartSpaceScale;
+    ctx.firstPass=tmpctx[ctx.ChartNewID].firstPass;
+    ctx.runanimationcompletefunction=tmpctx[ctx.ChartNewID].runanimationcompletefunction;
+    ctx.ChartNewId=tmpctx[ctx.ChartNewID].ChartNewId;
+    ctx.aspectRatio=tmpctx[ctx.ChartNewID].aspectRatio;
+    ctx.widthAtSetMeasures=tmpctx[ctx.ChartNewID].widthAtSetMeasures;
+    ctx.heightAtSetMeasures=tmpctx[ctx.ChartNewID].heightAtSetMeasures;
+    ctx.canvas.width=tmpctx[ctx.ChartNewID].canvas.width;
+    ctx.canvas.height=tmpctx[ctx.ChartNewID].canvas.height;
+
+
    ctx.clearRect(0,0,ctx.canvas.width,ctx.canvas.height);
-window.alert("Before Redraw");
-   ctx.drawImage(OSC,0,0);
-window.alert("After Redraw");
-
-//	  drawImageTest(tmpctx);
-//	  ctx.drawImage(OSC,100,100);
-	  
-window.alert("After testImage");
-
-//	  drawImageTest(ctx);
-window.alert("After drawImage 2");
-
+   ctx.drawImage(OSC[ctx.ChartNewID],0,0); 
+  
    } else {
      	 var myGraph = new Chart(ctx);	
           eval("myGraph."+ctx.tpchart+"(data,config);");
