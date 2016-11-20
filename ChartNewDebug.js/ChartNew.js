@@ -620,6 +620,7 @@ function chartJsResize() {
 		if(jsGraphResize[i][2].firstPass ==0)  {
 		} else if(jsGraphResize[i][2].firstPass ==9) {
 			jsGraphResize[i][2].firstPass=2;
+window.alert("REDRAWGRAPH in chartJsResize");
 			redrawGraph(jsGraphResize[i][2],jsGraphResize[i][3],jsGraphResize[i][4]);
 		} else if(jsGraphResize[i][2].firstPass < 10 ) {
 			jsGraphResize[i][2].firstPass+=10;
@@ -630,6 +631,7 @@ function chartJsResize() {
 function testRedraw(ctx,data,config) {
 	if (ctx.firstPass>10) {
 		ctx.firstPass=2;
+window.alert("REDRAWGRAPH in testRedraw");
 		redrawGraph(ctx,data,config) ;
 		return true;
 	} else {
@@ -655,6 +657,8 @@ function updateChart(ctx,data,config,animation,runanimationcompletefunction) {
 				}
 			}
 		}
+		
+window.alert("REDRAWGRAPH in updateChart");
 		redrawGraph(ctx,data,config);
 	}
 };
@@ -886,6 +890,7 @@ function isScrolledIntoView(element,config) {
 function scrollFunction() {
 	for (var i = 0; i < dynamicDisplayList["length"]; i++) {
 		if ((dynamicDisplay[dynamicDisplayList[i]][0]).firstPass==0) {
+window.alert("REDRAWGRAPH in scrollFunction");
 			redrawGraph(dynamicDisplay[dynamicDisplayList[i]][0],dynamicDisplay[dynamicDisplayList[i]][1], dynamicDisplay[dynamicDisplayList[i]][2]);
 		}
 	}
