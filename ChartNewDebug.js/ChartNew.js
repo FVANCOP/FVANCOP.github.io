@@ -731,7 +731,7 @@ window.alert("After Redraw");
 	  
 window.alert("After testImage");
 
-	  drawImageText(ctx);
+	  drawImageTest(ctx);
 window.alert("After drawImage 2");
 	  
    } else {
