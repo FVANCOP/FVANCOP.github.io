@@ -704,6 +704,8 @@ var savedCanvas=ctx.canvas;
     tmpctx.widthAtSetMeasures=ctx.widthAtSetMeasures;
     tmpctx.heightAtSetMeasures=ctx.heightAtSetMeasures;
 
+    var myGraph = new Chart(tmpctx);	
+        eval("myGraph."+ctx.tpchart+"(data,config);");
 
 
     var myGraph = new Chart(ctx);	
