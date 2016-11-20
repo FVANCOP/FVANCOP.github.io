@@ -35,6 +35,17 @@
 // ctx.firstPass=9 : chart is completely drawn;
 // If chartJsResize called : increment the value of ctx.firstPass with a value of 10.
 
+function drawImageTest(g) {
+   g.beginPath();
+   var ct = 90;
+   for (var i = 0; i < ct; i++) {
+      var x = 200 + 200*Math.sin(2*i*Math.PI / ct);
+      var y = 200 + 200*Math.cos(2*i*Math.PI / ct);
+      g.moveTo(200,200);
+      g.lineTo(x,y);
+   }
+   g.stroke();
+}
 
 // non standard functions;
 
@@ -713,6 +724,9 @@ window.alert( "Before Clear");
 window.alert("Before Redraw");
 	  ctx.drawImage(OSC,0,0);
 window.alert("After Redraw");
+
+	  drawImageTest(tmpctx);
+	  ctx.drawIMage(OSC,0,0);
   
    } else {
      	 var myGraph = new Chart(ctx);	
