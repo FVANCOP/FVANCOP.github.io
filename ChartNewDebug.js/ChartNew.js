@@ -675,12 +675,16 @@ window.alert("REDRAWGRAPH in updateChart");
 	}
 };
 
+var cntdraw=0;
 
 function redrawGraph(ctx,data,config) {
   var OSC;
   var tmpctx;
 
   if(ctx.firstPass==2 || ctx.firstPass==9) {
+
+var savedCanvas=ctx.canvas;	  
+	  
     OSC=  document.createElement("canvas");
     tmpctx=OSC.getContext("2d");
     tmpctx.vctx=ctx;
@@ -720,6 +724,7 @@ function redrawGraph(ctx,data,config) {
     ctx.canvas.width=tmpctx.canvas.width;
     ctx.canvas.height=tmpctx.canvas.height;
 
+	  
 window.alert( "Before Clear");
    ctx.clearRect(0,0,ctx.canvas.width,ctx.canvas.height);
 window.alert("Before Redraw");
@@ -733,7 +738,7 @@ window.alert("After testImage");
 
 	  drawImageTest(ctx);
 window.alert("After drawImage 2");
-	  
+ctx.canvas=savedCanvas;
    } else {
      	 var myGraph = new Chart(ctx);	
           eval("myGraph."+ctx.tpchart+"(data,config);");
