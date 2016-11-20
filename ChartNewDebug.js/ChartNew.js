@@ -681,7 +681,7 @@ function redrawGraph(ctx,data,config) {
   var OSC;
   var tmpctx;
 
-  if((ctx.firstPass==2 || ctx.firstPass==9) && cntdraw==0) {
+  if((ctx.firstPass==2 || ctx.firstPass==9) && (cntdraw%2)==0) {
 cntdraw++;	  
     OSC=  document.createElement("canvas");
     tmpctx=OSC.getContext("2d");
