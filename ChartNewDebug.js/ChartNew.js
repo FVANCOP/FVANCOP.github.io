@@ -35,19 +35,6 @@
 // ctx.firstPass=9 : chart is completely drawn;
 // If chartJsResize called : increment the value of ctx.firstPass with a value of 10.
 
-function drawImageTest(g) {
-   g.strokeStyle = "#800";
-   g.beginPath();
-   var ct = 90;
-   for (var i = 0; i < ct; i++) {
-      var x = 200 + 200*Math.sin(2*i*Math.PI / ct);
-      var y = 200 + 200*Math.cos(2*i*Math.PI / ct);
-      g.moveTo(200,200);
-      g.lineTo(x,y);
-   }
-   g.stroke();
-}
-
 // non standard functions;
 
 var chartJSLineStyle=[];
@@ -632,7 +619,6 @@ function chartJsResize() {
 		if(jsGraphResize[i][2].firstPass ==0)  {
 		} else if(jsGraphResize[i][2].firstPass ==9) {
 			jsGraphResize[i][2].firstPass=2;
-window.alert("REDRAWGRAPH in chartJsResize");
 			redrawGraph(jsGraphResize[i][2],jsGraphResize[i][3],jsGraphResize[i][4]);
 		} else if(jsGraphResize[i][2].firstPass < 10 ) {
 			jsGraphResize[i][2].firstPass+=10;
@@ -643,7 +629,6 @@ window.alert("REDRAWGRAPH in chartJsResize");
 function testRedraw(ctx,data,config) {
 	if (ctx.firstPass>10) {
 		ctx.firstPass=2;
-window.alert("REDRAWGRAPH in testRedraw");
 		redrawGraph(ctx,data,config) ;
 		return true;
 	} else {
@@ -670,7 +655,6 @@ function updateChart(ctx,data,config,animation,runanimationcompletefunction) {
 			}
 		}
 		
-window.alert("REDRAWGRAPH in updateChart");
 		redrawGraph(ctx,data,config);
 	}
 };
@@ -683,7 +667,6 @@ function redrawGraph(ctx,data,config) {
 //  var tmpctx;
 
   if((ctx.firstPass==2 || ctx.firstPass==9) && !(isIE() < 9 && isIE() != false) && (navigator.userAgent.indexOf("Safari")==-1)) {    
-window.alert("IN NEW FONCTION");
     if(typeof OSC[ctx.ChartNewID]=="undefined") {
       OSC[ctx.ChartNewID]=  document.createElement("canvas");
       tmpctx[ctx.ChartNewID]=OSC[ctx.ChartNewID].getContext("2d");
@@ -907,7 +890,6 @@ function isScrolledIntoView(element,config) {
 function scrollFunction() {
 	for (var i = 0; i < dynamicDisplayList["length"]; i++) {
 		if ((dynamicDisplay[dynamicDisplayList[i]][0]).firstPass==0) {
-window.alert("REDRAWGRAPH in scrollFunction");
 			redrawGraph(dynamicDisplay[dynamicDisplayList[i]][0],dynamicDisplay[dynamicDisplayList[i]][1], dynamicDisplay[dynamicDisplayList[i]][2]);
 		}
 	}
@@ -1037,9 +1019,7 @@ function highLightAction(action,ctx,data,config,v1,v2) {
 		}
 	}
 	if(redisplay==true) {
-		window.alert("before updateChart in Highlightaction");
  		updateChart(ctx,data,config,false,config.highLightRerunEndFunction);
-		window.alert("after updateChart in Highlightaction");
 	}
 };
 
@@ -4709,7 +4689,6 @@ window.Chart = function(context) {
 			animationLoop(config,msr.legendMsr, drawScale, drawBars, ctx, msr.clrx, msr.clry, msr.clrwidth, msr.clrheight, yAxisPosX + msr.availableWidth / 2, xAxisPosY - msr.availableHeight / 2, yAxisPosX, xAxisPosY, data, statData);
 
 		} else {
-window.alert("BLANK DRAW");f
 			testRedraw(ctx,data,config);
 			ctx.firstPass=9;
 		}
