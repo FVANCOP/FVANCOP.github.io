@@ -1,4 +1,4 @@
-console.log("INIT");
+window.alert("INIT");
 
 /*              
  * ChartNew.js  
