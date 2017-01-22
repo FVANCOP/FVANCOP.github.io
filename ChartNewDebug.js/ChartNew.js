@@ -1,5 +1,3 @@
-window.alert("INIT");
-
 /*              
  * ChartNew.js  
  *                                                                                                                                                                           
