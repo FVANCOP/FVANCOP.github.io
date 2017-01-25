@@ -718,8 +718,11 @@ function redrawGraph(ctx,data,config) {
    ctx.drawImage(OSC,0,0); 
   
    } else {
-     	 var myGraph = new Chart(ctx);	
-          eval("myGraph."+ctx.tpchart+"(data,config);");
+     if(typeof ctx.vWidth=="number"){
+       ctx.canvas.width=getMaximumWidth(ctx.canvas)*ctx.vWidth/100;
+     }
+     var myGraph = new Chart(ctx);	
+     eval("myGraph."+ctx.tpchart+"(data,config);");
    }
 
 };
