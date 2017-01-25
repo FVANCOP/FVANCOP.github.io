@@ -557,7 +557,7 @@ function getMaximumHeight(domNode){
 };
 
 function resizeCtx(ctx,config)
-{                                                                                                                                           
+{
 	if (isIE() < 9 && isIE() != false) return(true);
 
 	if(config.responsive) {	
@@ -664,6 +664,7 @@ function updateChart(ctx,data,config,animation,runanimationcompletefunction) {
 
 function redrawGraph(ctx,data,config) {
 
+//  if(typeof ctx.vWidth!="number" && (ctx.firstPass==2 || ctx.firstPass==9) && !(isIE() < 9 && isIE() != false) && (navigator.userAgent.indexOf("Safari")==-1)) {    
   if((ctx.firstPass==2 || ctx.firstPass==9) && !(isIE() < 9 && isIE() != false) && (navigator.userAgent.indexOf("Safari")==-1)) {    
     var OSC;
     var tmpctx;
@@ -673,6 +674,10 @@ function redrawGraph(ctx,data,config) {
 
     OSC.width=ctx.canvas.width;
     OSC.height=ctx.canvas.height;
+    if(typeof ctx.vWidth=="number"){
+      tmpctx.canvas.width=getMaximumWidth(ctx.canvas)*ctx.vWidth/100;
+      tmpctx.vWidth=ctx.vWidth;
+    }
     tmpctx.ChartNewId=ctx.ChartNewId;
     tmpctx.tpchart=ctx.tpchart;
     tmpctx.tpdata=ctx.tpdata;
@@ -688,10 +693,10 @@ function redrawGraph(ctx,data,config) {
     tmpctx.pieces_drawn=ctx.pieces_drawn;
 
 
+ 	  var myGraph = new Chart(tmpctx);	
+    eval("myGraph."+tmpctx.tpchart+"(data,config);");
 
- 	 var myGraph = new Chart(tmpctx);	
-        eval("myGraph."+tmpctx.tpchart+"(data,config);");
-
+    if(typeof ctx.vWidth=="number")ctx.vWidth=tmpctx.vWidth;
     ctx.tpchart=tmpctx.tpchart;
     ctx.tpdata=tmpctx.tpdata;
     ctx.initialWidth=tmpctx.initialWidth;
@@ -2492,21 +2497,26 @@ window.Chart = function(context) {
 	
 
 
-	function init_and_start(ctx,data,config) {
-
+function init_and_start(ctx,data,config) {
 		var i;
-
 		if (typeof ctx.initialWidth == "undefined") {
-      if(typeof ctx.canvas.style.width=="string") {
-        if(ctx.canvas.style.width!="" && ctx.canvas.style.width.indexOf("px") > 0){
+      if(typeof ctx.canvas.style.width=="string" || (typeof ctx.vWidth)=="number") {
+        if(typeof ctx.initialWidth == "undefined" && ctx.canvas.style.width!="" && ctx.canvas.style.width.indexOf("px") > 0){
           ctx.canvas.width=ctx.canvas.style.width.substring(0,ctx.canvas.style.width.indexOf("px"));
+        } else if((ctx.canvas.style.width!="" && ctx.canvas.style.width.indexOf("%") > 0)|| (typeof ctx.vWidth)=="number"){
+          ctx.vWidth=1*ctx.canvas.style.width.substring(0,ctx.canvas.style.width.indexOf("%"));          
+          ctx.canvas.width=getMaximumWidth(ctx.canvas)*ctx.vWidth/100;
         } 
       }
       if(typeof ctx.canvas.style.height=="string") {
-        if(ctx.canvas.style.height!=""){
+        if(typeof ctx.initialWidth == "undefined" && ctx.canvas.style.height!="" && ctx.canvas.style.height.indexOf("px") > 0){
           ctx.canvas.height=ctx.canvas.style.height.substring(0,ctx.canvas.style.height.indexOf("px"));
+        } else if(ctx.canvas.style.height!="" && ctx.canvas.style.height.indexOf("%") > 0){
+          ctx.canvas.height=getMaximumHeight(ctx.canvas)*ctx.canvas.style.height.substring(0,ctx.canvas.style.height.indexOf("%"))/100;
         } 
       }
+    }
+		if (typeof ctx.initialWidth == "undefined") {
       ctx.initialWidth =ctx.canvas.width;
     }
 		if (typeof ctx.chartTextScale == "undefined") ctx.chartTextScale=config.chartTextScale;
@@ -2534,7 +2544,7 @@ window.Chart = function(context) {
 			ctx._eventListeners = {};
 		}
 			  
-		resizeCtx(ctx,config);
+		if(typeof ctx.vWidth=="undefined")resizeCtx(ctx,config);
 
 		if (!dynamicFunction(data, config, ctx)) return false;   // if config.dynamicDisplay=true, chart has to be displayed only if in current screen;  
 
@@ -2611,10 +2621,7 @@ window.Chart = function(context) {
 
 		ctx.tpchart="PolarArea";
 		ctx.tpdata=0;
-    
-		
     if (!init_and_start(ctx,data,config)) return;
-
 		var statData=initPassVariableData_part1(data,config,ctx);
     init_result(ctx,data,statData);
 
@@ -3151,7 +3158,6 @@ window.Chart = function(context) {
 		var msr, midPieX, midPieY, doughnutRadius,cutoutRadius;
 
 		ctx.tpdata=0;
-
 	  if (!init_and_start(ctx,data,config)) return;
 
 		var statData=initPassVariableData_part1(data,config,ctx);
@@ -3169,7 +3175,6 @@ window.Chart = function(context) {
 		
     if(chartType == "Pie")cutoutRadius=0;
 		else cutoutRadius = doughnutRadius * (config.percentageInnerCutout / 100);
-
 		if(doughnutRadius > 0) {
 			initPassVariableData_part2(statData,data,config,ctx,false,false,{midPosX : midPieX,midPosY : midPieY ,int_radius : cutoutRadius ,ext_radius : doughnutRadius,outerVal : -1});
 			animationLoop(config,msr.legendMsr, null, drawPieSegments, ctx, msr.clrx, msr.clry, msr.clrwidth, msr.clrheight, midPieX, midPieY, midPieX - doughnutRadius, midPieY + doughnutRadius, data, statData);
@@ -4196,7 +4201,7 @@ window.Chart = function(context) {
 				if(showLabels(ctx,data,config,j)){
 					if (config.yAxisLeft) {
 						ctx.textAlign = "right";
-						ctx.fillTextMultiLine(fmtChartJS(config, data.labels[j], config.fmtXLabel), yAxisPosX - (Math.ceil(ctx.chartLineScale*config.scaleTickSizeLeft) + Math.ceil(ctx.chartSpaceScale*config.yAxisSpaceRight)), xAxisPosY - ((j + 1) * scaleHop) + Math.ceil(ctx.chartSpaceScale*config.barValueSpacing) + additionalSpaceBetweenBars + (barWidth / 2), ctx.textBaseline, (Math.ceil(ctx.chartTextScale*config.scaleFontSize)),true,config.detectMouseOnText,ctx,"YLEFTAXIS_TEXTMOUSE",0,0,0,-1,j);
+						ctx.fillTextMultiLine(fmtChartJS(config, data.labels[j], config.fmtXLabel), yAxisPosX - (Math.ceil(ctx.chartLineScale*config.scaleTickSizeLeft) + Math.ceil(ctx.chartSpaceScale*config.yAxisSpaceRight)), xAxisPosY - ((j + 1) * scaleHop) + additionalSpaceBetweenBars + (barWidth / 2), ctx.textBaseline, (Math.ceil(ctx.chartTextScale*config.scaleFontSize)),true,config.detectMouseOnText,ctx,"YLEFTAXIS_TEXTMOUSE",0,0,0,-1,j);
 					}
 					if (config.yAxisRight) {
 						ctx.textAlign = "left";
@@ -5829,8 +5834,8 @@ function calculateOrderOfMagnitude(val) {
 	//****************************************************************************************
 	function setMeasures(data, config, ctx, canvasheight, canvaswidth, ylabels, ylabels2, reverseLegend, reverseAxis, drawAxis, legendBox, typegraph) {
 
-        	var height=canvasheight;
-        	var width=canvaswidth;
+   	var height=canvasheight;
+   	var width=canvaswidth;
 		if (window.devicePixelRatio>1) {
 			height=height/window.devicePixelRatio;
 			width=width/window.devicePixelRatio;
@@ -6690,6 +6695,7 @@ function calculateOrderOfMagnitude(val) {
 		clry = topNotUsableHeight;
 		clrheight = availableHeight;
 
+
 		return {
 			leftNotUsableWidth: leftNotUsableWidth,
 			rightNotUsableWidth: rightNotUsableWidth,
@@ -7080,14 +7086,14 @@ function calculateOrderOfMagnitude(val) {
 		// ----------------------------------------------------		
                 // highLight : false, 	highLightMouseFunction : "mousemove",
 		// ----------------------------------------------------		
-		// - mouse sortir ou entrer dans une piÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¨ce => Pas d'influence sur une action de souris. C'est liÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â© ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â  l'action de annotateFunction
+		// - mouse sortir ou entrer dans une piÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¨ce => Pas d'influence sur une action de souris. C'est liÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â© ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â  l'action de annotateFunction
 		//      	annotateFunctionIn : inBar,
       		//		annotateFunctionOut : outBar,
 		// ----------------------------------------------------		
 		// - mouseDownRight	mouseDownLeft: null  mouseDownMiddle: null  
 		// - mouseMove: null 	mouseWheel : null    mouseOut: null (lorsque la souris sort du canvas) 	
 		// ----------------------------------------------------		
-		//  mouse sur texte : detectMouseOnText => Pas d'influence sur une action de souris. C'est liÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â© ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â  une autre action;
+		//  mouse sur texte : detectMouseOnText => Pas d'influence sur une action de souris. C'est liÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â© ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â  une autre action;
 		// ----------------------------------------------------		
 
 		function setAction(ctx,action){
@@ -7182,7 +7188,7 @@ function calculateOrderOfMagnitude(val) {
 			};
 		}
 		
-		// initialiser les variables nÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©cessaires pour l'action doMouseAction;
+		// initialiser les variables nÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©cessaires pour l'action doMouseAction;
                 inMouseAction[ctx.ChartNewId]=false;
 		mouseActionData[ctx.ChartNewId]={ data : data, config: config, prevShow : -1 };
 	};
