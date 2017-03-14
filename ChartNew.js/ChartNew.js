@@ -657,8 +657,8 @@ function testRedraw(ctx,data,config) {
 };
 
 function updateChart(ctx,data,config,animation,runanimationcompletefunction) {
-//  config.addListener=false;
-  ctx.addListener=false;
+  config.addListener=false;
+//  ctx.addListener=false;
 	if (ctx.firstPass==9)
 	{
 
@@ -7368,7 +7368,7 @@ function calculateOrderOfMagnitude(val) {
       if(ctx.addListener==false) return;
     }
     
-//  if(config.addListener==false) return;
+    if(config.addListener==false) return;
 
 		var mousewheelevt=(/Firefox/i.test(navigator.userAgent))? "DOMMouseScroll" : "mousewheel" 
 
