@@ -561,8 +561,10 @@ function resizeCtx(ctx,config)
 	if (isIE() < 9 && isIE() != false) return(true);
 
 	if(config.responsive) {	
-                        
-		if(typeof config.maintainAspectRatio == "undefined")config.maintainAspectRatio=true;
+
+//    ctx.canvas.style.width=ctx.prevStyleWidth;
+//    ctx.canvas.style.height=ctx.prevStyleHeight;
+ 		if(typeof config.maintainAspectRatio == "undefined")config.maintainAspectRatio=true;
 		if(typeof config.responsiveMinWidth == "undefined")config.responsiveMinWidth=0;
 		if(typeof config.responsiveMinHeight  == "undefined")config.responsiveMinHeight=0;
 		if(typeof config.responsiveMaxWidth  == "undefined")config.responsiveMaxWidth=9999999;
@@ -576,11 +578,28 @@ function resizeCtx(ctx,config)
     }
 		if(typeof ctx.aspectRatio == "undefined") {
 			ctx.aspectRatio = canvas.width / canvas.height;
+//      if(1*config.forcedAspectRatio)ctx.aspectRatio=1/config.forcedAspectRatio;
 		}
-  	var newWidth = getMaximumWidth(canvas);
-		var newHeight = config.maintainAspectRatio ? newWidth / ctx.aspectRatio : getMaximumHeight(canvas);
-		newWidth=Math.min(config.responsiveMaxWidth,Math.max(config.responsiveMinWidth,newWidth));
+
+    var newWidth,newHeight;
+   
+  	newWidth = getMaximumWidth(canvas);
+		newHeight = config.maintainAspectRatio ? newWidth / ctx.aspectRatio : getMaximumHeight(canvas);
 		newHeight=Math.min(config.responsiveMaxHeight,Math.max(config.responsiveMinHeight,newHeight));
+
+////    if(window.devicePixelRatio>1 && typeof ctx.vWidth!="undefined") {
+////      var canvasWidth=window.getComputedStyle(ctx.canvas).getPropertyValue('width');
+////      newWidth=canvasWidth.substring(0,canvasWidth.indexOf("px"));
+////    } else if(typeof ctx.vWidth=="undefined") newWidth = getMaximumWidth(canvas);
+////    else newWidth=ctx.canvas.width;
+
+		newWidth=Math.min(config.responsiveMaxWidth,Math.max(config.responsiveMinWidth,newWidth));
+
+//	  if(typeof ctx.vWidth=="undefined")newHeight = config.maintainAspectRatio ? newWidth / ctx.aspectRatio : getMaximumHeight(canvas);
+//    else newHeight = config.maintainAspectRatio ? newWidth / ctx.aspectRatio : ctx.canvas.height;
+    
+//		newHeight=Math.min(config.responsiveMaxHeight,Math.max(config.responsiveMinHeight,newHeight));
+
 
 		if(typeof ctx.DefaultchartTextScale=="undefined")ctx.DefaultchartTextScale=config.chartTextScale;
 		if(typeof ctx.DefaultchartLineScale=="undefined")ctx.DefaultchartLineScale=config.chartLineScale;
@@ -606,11 +625,109 @@ function resizeCtx(ctx,config)
 			ctx.original_height=ctx.canvas.height;
 		}
 		ctx.canvas.style.width = ctx.original_width + "px";
+////		ctx.canvas.style.width = ctx.canvas.width + "px";
+
+    if(1*config.forcedAspectRatio)ctx.canvas.height=config.forcedAspectRatio*ctx.canvas.width;
+
 		ctx.canvas.style.height = ctx.original_height + "px";
+////		ctx.canvas.style.height = ctx.canvas.height + "px";
+
 		ctx.canvas.height = ctx.original_height * window.devicePixelRatio;
 		ctx.canvas.width = ctx.original_width * window.devicePixelRatio;
+////		ctx.canvas.height = ctx.canvas.height * window.devicePixelRatio;
+////		ctx.canvas.width = ctx.canvas.width * window.devicePixelRatio;
+
 		ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
 	}
+////	} else if(1*config.forcedAspectRatio)ctx.canvas.height=config.forcedAspectRatio*ctx.canvas.width;
+  
+};
+
+
+function resizeCtx_version_mixte_originale(ctx,config)
+{                                                                                                                                           
+	if (isIE() < 9 && isIE() != false) return(true);
+
+	if(config.responsive) {	
+
+//    ctx.canvas.style.width=ctx.prevStyleWidth;
+//    ctx.canvas.style.height=ctx.prevStyleHeight;
+ 		if(typeof config.maintainAspectRatio == "undefined")config.maintainAspectRatio=true;
+		if(typeof config.responsiveMinWidth == "undefined")config.responsiveMinWidth=0;
+		if(typeof config.responsiveMinHeight  == "undefined")config.responsiveMinHeight=0;
+		if(typeof config.responsiveMaxWidth  == "undefined")config.responsiveMaxWidth=9999999;
+		if(typeof config.responsiveMaxHeight  == "undefined")config.responsiveMaxHeight=9999999;
+		var canvas;
+    if(typeof ctx.vctx != "undefined"){
+      canvas=ctx.vctx.canvas;
+    }
+    else {
+      canvas=ctx.canvas;
+    }
+		if(typeof ctx.aspectRatio == "undefined") {
+			ctx.aspectRatio = canvas.width / canvas.height;
+//      if(1*config.forcedAspectRatio)ctx.aspectRatio=1/config.forcedAspectRatio;
+		}
+
+    var newWidth,newHeight;
+   
+  	newWidth = getMaximumWidth(canvas);
+		newHeight = config.maintainAspectRatio ? newWidth / ctx.aspectRatio : getMaximumHeight(canvas);
+		newHeight=Math.min(config.responsiveMaxHeight,Math.max(config.responsiveMinHeight,newHeight));
+
+////    if(window.devicePixelRatio>1 && typeof ctx.vWidth!="undefined") {
+////      var canvasWidth=window.getComputedStyle(ctx.canvas).getPropertyValue('width');
+////      newWidth=canvasWidth.substring(0,canvasWidth.indexOf("px"));
+////    } else if(typeof ctx.vWidth=="undefined") newWidth = getMaximumWidth(canvas);
+////    else newWidth=ctx.canvas.width;
+
+		newWidth=Math.min(config.responsiveMaxWidth,Math.max(config.responsiveMinWidth,newWidth));
+
+//	  if(typeof ctx.vWidth=="undefined")newHeight = config.maintainAspectRatio ? newWidth / ctx.aspectRatio : getMaximumHeight(canvas);
+//    else newHeight = config.maintainAspectRatio ? newWidth / ctx.aspectRatio : ctx.canvas.height;
+    
+//		newHeight=Math.min(config.responsiveMaxHeight,Math.max(config.responsiveMinHeight,newHeight));
+
+
+		if(typeof ctx.DefaultchartTextScale=="undefined")ctx.DefaultchartTextScale=config.chartTextScale;
+		if(typeof ctx.DefaultchartLineScale=="undefined")ctx.DefaultchartLineScale=config.chartLineScale;
+		if(typeof ctx.DefaultchartSpaceScale=="undefined")ctx.DefaultchartSpaceScale=config.chartSpaceScale;
+		/* new ratio */
+		if(typeof ctx.chartTextScale != "undefined" && config.responsiveScaleContent) {
+      
+			ctx.chartTextScale=ctx.DefaultchartTextScale*(newWidth/ctx.initialWidth);
+			ctx.chartLineScale=ctx.DefaultchartLineScale*(newWidth/ctx.initialWidth);
+			ctx.chartSpaceScale=ctx.DefaultchartSpaceScale*(newWidth/ctx.initialWidth);
+		}
+		                                                                                                            
+		if (window.devicePixelRatio>1) {
+			ctx.canvas.style.width = newWidth + "px";
+			ctx.canvas.style.height = newHeight + "px";
+		}
+		ctx.canvas.height = newHeight * Math.max(1,window.devicePixelRatio);
+		ctx.canvas.width = newWidth * Math.max(1,window.devicePixelRatio);
+		ctx.scale(Math.max(1,window.devicePixelRatio), Math.max(1,window.devicePixelRatio));
+	} else if (window.devicePixelRatio>1) {
+		if(typeof ctx.original_width=="undefined") {
+			ctx.original_width=ctx.canvas.width;
+			ctx.original_height=ctx.canvas.height;
+		}
+		ctx.canvas.style.width = ctx.original_width + "px";
+////		ctx.canvas.style.width = ctx.canvas.width + "px";
+
+    if(1*config.forcedAspectRatio)ctx.canvas.height=config.forcedAspectRatio*ctx.canvas.width;
+
+		ctx.canvas.style.height = ctx.original_height + "px";
+////		ctx.canvas.style.height = ctx.canvas.height + "px";
+
+		ctx.canvas.height = ctx.original_height * window.devicePixelRatio;
+		ctx.canvas.width = ctx.original_width * window.devicePixelRatio;
+////		ctx.canvas.height = ctx.canvas.height * window.devicePixelRatio;
+////		ctx.canvas.width = ctx.canvas.width * window.devicePixelRatio;
+
+		ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+	}
+////	} else if(1*config.forcedAspectRatio)ctx.canvas.height=config.forcedAspectRatio*ctx.canvas.width;
   
 };
 
