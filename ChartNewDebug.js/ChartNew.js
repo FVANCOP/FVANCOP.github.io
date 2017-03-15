@@ -561,7 +561,8 @@ function resizeCtx(ctx,config)
 	if (isIE() < 9 && isIE() != false) return(true);
 
 	if(config.responsive) {	
-
+window.alert("IN RESIZE:");
+window.alert("Value:"+ctx.prevStyleWidth)
 //    ctx.canvas.style.width=ctx.prevStyleWidth;
 //    ctx.canvas.style.height=ctx.prevStyleHeight;
  		if(typeof config.maintainAspectRatio == "undefined")config.maintainAspectRatio=true;
@@ -878,6 +879,9 @@ function redrawGraph(ctx,data,config) {
       tmpctx.vWidth=ctx.vWidth;      
     } 
     tmpctx.ChartNewId=ctx.ChartNewId;
+window.alert("IN REDRAW:");
+window.alert("Value:"+ctx.prevStyleWidth)
+
     tmpctx.prevStyleWidth=ctx.prevStyleWidth;
     tmpctx.prevStyleHeight=ctx.prevStyleHeight;
     tmpctx.tpchart=ctx.tpchart;
@@ -2753,6 +2757,8 @@ function init_and_start(ctx,data,config) {
 		if (typeof ctx.initialWidth == "undefined") {
 
       ctx.prevStyleWidth=ctx.canvas.style.width;
+window.alert("IN INIT:");
+window.alert("Value:"+ctx.prevStyleWidth)
       ctx.prevStyleHeight=ctx.canvas.style.height;
       if (isIE() < 9 && isIE() != false) {
       } else {
