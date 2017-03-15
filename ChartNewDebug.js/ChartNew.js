@@ -563,6 +563,8 @@ function resizeCtx(ctx,config)
 	if(config.responsive) {	
 window.alert("IN RESIZE:");
 window.alert("Value:"+ctx.prevStyleWidth)
+    if(ctx.prevStyleWidth !="") ctx.canvas.style.width=ctx.prevStyleWidth;
+    if(ctx.prevStyleHeight !="") ctx.canvas.style.height=ctx.prevStyleHeight;
 //    ctx.canvas.style.width=ctx.prevStyleWidth;
 //    ctx.canvas.style.height=ctx.prevStyleHeight;
  		if(typeof config.maintainAspectRatio == "undefined")config.maintainAspectRatio=true;
