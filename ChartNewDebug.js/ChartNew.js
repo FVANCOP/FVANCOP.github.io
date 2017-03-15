@@ -578,7 +578,7 @@ function resizeCtx(ctx,config)
     }
 		if(typeof ctx.aspectRatio == "undefined") {
 			ctx.aspectRatio = canvas.width / canvas.height;
-      if(1*config.forcedAspectRatio)ctx.aspectRatio=1/config.forcedAspectRatio;
+//      if(1*config.forcedAspectRatio)ctx.aspectRatio=1/config.forcedAspectRatio;
 		}
 
     var newWidth,newHeight;
@@ -638,7 +638,8 @@ function resizeCtx(ctx,config)
 ////		ctx.canvas.width = ctx.canvas.width * window.devicePixelRatio;
 
 		ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
-	} else if(1*config.forcedAspectRatio)ctx.canvas.height=config.forcedAspectRatio*ctx.canvas.width;
+	}
+////	} else if(1*config.forcedAspectRatio)ctx.canvas.height=config.forcedAspectRatio*ctx.canvas.width;
   
 };
 
