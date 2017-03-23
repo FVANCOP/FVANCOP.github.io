@@ -1,4 +1,8 @@
 
+
+/* bug : multichart et drilldown (en retina display uniquement...) */
+
+/* attention : il faut recopier Samples\demo.html vers le site github */
                                                                                           
 /*              
  * ChartNew.js  
@@ -560,8 +564,7 @@ function getMaximumHeight(domNode){
 
 function resizeCtxFunction(iter,ctx,data,config) {
 
-
-	if (isIE() < 9 && isIE() != false) return(true);
+ 	if (isIE() < 9 && isIE() != false) return(true);
 
   var beforeWidth,afterWidth;
   var beforeHeight,afterHeight;
@@ -582,9 +585,8 @@ function resizeCtxFunction(iter,ctx,data,config) {
   if(typeof config.responsiveMaxWidth  == "undefined")responsiveMaxWidth=9999999;else responsiveMaxWidth=config.responsiveMaxWidth;
   if(typeof config.responsiveMaxHeight  == "undefined")responsiveMaxHeight=9999999;else responsiveMaxHeight=config.responsiveMaxHeight;
 
-
-
-  if (iter==0) {  // First Time entered;
+  if (typeof ctx.initialSize == "undefined") {// First Time entered;
+//  if (iter==0) {  // First Time entered;
 
     function getCSSText(className) {
       if(typeof document.styleSheets !="object")return "";
