@@ -2818,7 +2818,8 @@ function init_and_start(ctx,data,config) {
 			initPassVariableData_part2(statData,data,config,ctx,scaleData.logarithm1,scaleData.logarithm2,{midPosX : midPosX,midPosY : midPosY,int_radius : 0,ext_radius : scaleHop*scaleData.nbOfStepsAxis1, calculatedScale : calculatedScale, scaleHop : scaleHop,outerVal : outerVal});
 			animationLoop(config,msr.legendMsr,drawScale, drawAllSegments, ctx, msr.clrx, msr.clry, msr.clrwidth, msr.clrheight, midPosX, midPosY, midPosX - ((Min([msr.availableHeight, msr.availableWidth]) / 2) - 5), midPosY + ((Min([msr.availableHeight, msr.availableWidth]) / 2) - 5), data, statData);
 		} else {
-			testRedraw(ctx,data,config);
+window.alert("Too small 1");			
+      testRedraw(ctx,data,config);
 			if (typeof config.onAnimationComplete == "function" && (config.alwaysRunFunctionAtCompletion==true || ctx.runanimationcompletefunction==true)) {
 			   config.onAnimationComplete(ctx, config, data, 1, 0,statData);
 				 ctx.runanimationcompletefunction=false;
@@ -3340,6 +3341,7 @@ function init_and_start(ctx,data,config) {
 			initPassVariableData_part2(statData,data,config,ctx,false,false,{midPosX : midPieX,midPosY : midPieY ,int_radius : cutoutRadius ,ext_radius : doughnutRadius,outerVal : -1});
 			animationLoop(config,msr.legendMsr, null, drawPieSegments, ctx, msr.clrx, msr.clry, msr.clrwidth, msr.clrheight, midPieX, midPieY, midPieX - doughnutRadius, midPieY + doughnutRadius, data, statData);
 		} else {
+window.alert("Too small 2");			
 			testRedraw(ctx,data,config);
 			if (typeof config.onAnimationComplete == "function" && (config.alwaysRunFunctionAtCompletion==true || ctx.runanimationcompletefunction==true)) {
 			   config.onAnimationComplete(ctx, config, data, 1, 0,statData);
@@ -3642,7 +3644,8 @@ function init_and_start(ctx,data,config) {
 			if(typeof config.afterLabelsFunction== "function")config.afterLabelsFunction("AFTERLABELSFUNCTION",ctx,data,statData,-1,-1,{animationValue : 1, cntiter: 0, config : config});
 			animationLoop(config,msr.legendMsr, drawScale, drawLines, ctx, msr.clrx, msr.clry, msr.clrwidth, msr.clrheight, yAxisPosX + msr.availableWidth / 2, xAxisPosY - msr.availableHeight / 2, yAxisPosX, xAxisPosY, data, statData);
 		} else {
-			testRedraw(ctx,data,config);
+window.alert("Too small 3");			
+      testRedraw(ctx,data,config);
 			if (typeof config.onAnimationComplete == "function" && (config.alwaysRunFunctionAtCompletion==true || ctx.runanimationcompletefunction==true)) {
 			   config.onAnimationComplete(ctx, config, data, 1, 0,statData);
 				 ctx.runanimationcompletefunction=false;
@@ -3902,6 +3905,7 @@ function init_and_start(ctx,data,config) {
 			if(typeof config.afterLabelsFunction== "function")config.afterLabelsFunction("AFTERLABELSFUNCTION",ctx,data,statData,-1,-1,{animationValue : 1, cntiter: 0, config : config});
 			animationLoop(config,msr.legendMsr, drawScale, drawBars, ctx, msr.clrx, msr.clry, msr.clrwidth, msr.clrheight, yAxisPosX + msr.availableWidth / 2, xAxisPosY - msr.availableHeight / 2, yAxisPosX, xAxisPosY, data, statData);
 		} else {
+window.alert("Too small 4");			
 			testRedraw(ctx,data,config);
 			if (typeof config.onAnimationComplete == "function" && (config.alwaysRunFunctionAtCompletion==true || ctx.runanimationcompletefunction==true)) {
 			   config.onAnimationComplete(ctx, config, data, 1, 0,statData);
@@ -4220,6 +4224,7 @@ function init_and_start(ctx,data,config) {
 			if(typeof config.afterLabelsFunction== "function")config.afterLabelsFunction("AFTERLABELSFUNCTION",ctx,data,statData,-1,-1,{animationValue : 1, cntiter: 0, config : config});
 			animationLoop(config,msr.legendMsr, drawScale, drawBars, ctx, msr.clrx, msr.clry, msr.clrwidth, msr.clrheight, yAxisPosX + msr.availableWidth / 2, xAxisPosY - msr.availableHeight / 2, yAxisPosX, xAxisPosY, data, statData);
 		} else {
+window.alert("Too small 5");			
 			testRedraw(ctx,data,config);
 			if (typeof config.onAnimationComplete == "function" && (config.alwaysRunFunctionAtCompletion==true || ctx.runanimationcompletefunction==true)) {
 			   config.onAnimationComplete(ctx, config, data, 1, 0,statData);
@@ -4534,6 +4539,7 @@ function init_and_start(ctx,data,config) {
 			animationLoop(config,msr.legendMsr, drawScale, drawBars, ctx, msr.clrx, msr.clry, msr.clrwidth, msr.clrheight, yAxisPosX + msr.availableWidth / 2, xAxisPosY - msr.availableHeight / 2, yAxisPosX, xAxisPosY, data, statData);
 
 		} else {
+window.alert("Too small 6");			
 			testRedraw(ctx,data,config);
 			if (typeof config.onAnimationComplete == "function" && (config.alwaysRunFunctionAtCompletion==true || ctx.runanimationcompletefunction==true)) {
 			   config.onAnimationComplete(ctx, config, data, 1, 0,statData);
@@ -4886,6 +4892,7 @@ function init_and_start(ctx,data,config) {
 			if(typeof config.afterLabelsFunction== "function")config.afterLabelsFunction("AFTERLABELSFUNCTION",ctx,data,statData,-1,-1,{animationValue : 1, cntiter: 0, config : config});
 			animationLoop(config,msr.legendMsr, drawScale, drawBars, ctx, msr.clrx, msr.clry, msr.clrwidth, msr.clrheight, yAxisPosX + msr.availableWidth / 2, xAxisPosY - msr.availableHeight / 2, yAxisPosX, xAxisPosY, data, statData);
 		} else {
+window.alert("Too small 7");			
 			testRedraw(ctx,data,config);
 			if (typeof config.onAnimationComplete == "function" && (config.alwaysRunFunctionAtCompletion==true || ctx.runanimationcompletefunction==true)) {
 			   config.onAnimationComplete(ctx, config, data, 1, 0,statData);
