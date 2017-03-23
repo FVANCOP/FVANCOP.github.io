@@ -2,7 +2,7 @@
 
 /* bug : multichart et drilldown (en retina display uniquement...) */
 
-/* attention : il faut recopier Samples\demo.html vers le site github */
+/* attention : il faut recopier Samples\demo.html et multiChartonCanvas.html vers le site github */
                                                                                           
 /*              
  * ChartNew.js  
@@ -762,7 +762,6 @@ function testRedraw(ctx,data,config) {
 };
 
 function updateChart(ctx,data,config,animation,runanimationcompletefunction) {
-//  config.addListener=false;
   ctx.addListener=false;
 	if (ctx.firstPass==9)
 	{
@@ -787,7 +786,6 @@ function updateChart(ctx,data,config,animation,runanimationcompletefunction) {
 
 
 function redrawGraph(ctx,data,config) {
-
 
   if(ctx.initialSize.pxRatio==1 && (ctx.firstPass==2 || ctx.firstPass==9) && !(isIE() < 9 && isIE() != false) && (navigator.userAgent.indexOf("Safari")==-1)) {    
     var OSC;
@@ -1207,6 +1205,7 @@ function doMouseAction(event, ctx, action) {
 	if (ctx.firstPass != 9)return;
 	if(action=="mousedown") action=action+" "+event.which;
 	if(ctx.mouseAction.indexOf(action)<0){return;}
+
 	var config=mouseActionData[ctx.ChartNewId].config;
 	var data=mouseActionData[ctx.ChartNewId].data;
 	var i,prevShown,prevShowSaved;
@@ -7455,7 +7454,10 @@ function calculateOrderOfMagnitude(val) {
 	function defMouse(ctx,data,config) {
 
     if(typeof ctx.addListener!="undefined") {
-      if(ctx.addListener==false) return;
+      if(ctx.addListener==false) {
+    		mouseActionData[ctx.ChartNewId]={ data : data, config: config, prevShow : -1 };
+        return;
+      }
     }
     
 //  if(config.addListener==false) return;
@@ -7584,7 +7586,7 @@ function calculateOrderOfMagnitude(val) {
 		}
 		
 		// initialiser les variables necessaires pour l'action doMouseAction;
-                inMouseAction[ctx.ChartNewId]=false;
+    inMouseAction[ctx.ChartNewId]=false;
 		mouseActionData[ctx.ChartNewId]={ data : data, config: config, prevShow : -1 };
 	};
 
