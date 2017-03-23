@@ -26,21 +26,18 @@ var mydata1 = {
 			fillColor : "rgba(220,220,220,0.5)",
 			strokeColor : "rgba(220,220,220,1)",
 			pointColor : "rgba(220,220,220,1)",
-			pointstrokeColor : "yellow",
-      axis : 2,
-			data : [95,53,99,,73,27,82],
-//			data : [40],
-
+			pointStrokeColor : "yellow",
+			data : [14,53,99,,73,27,82],
+      pointDotRadius : 5,
+      type : "Line",
       title : "2014"
 		},
 		{
-			fillColor : "rgba(151,187,205,0.5)",
-			strokeColor : "rgba(151,187,205,1)",
-			pointColor : "green",
-			pointstrokeColor : "yellow",
-			data : [35,43,59,,31,50,66],
-      axis : 1,
-//			data : [35],
+			pointColor : "rgba(25,200,200,0.2)",
+			pointStrokeColor : "grey",
+			data : [35,43,59,,31,50,13],
+      pointDotRadius : [50,15,30,,5,50,50],
+//      type : "Line",
       title : "2013"
 		}
 	]
@@ -50,6 +47,13 @@ var startWithDataset =1;
 var startWithData =1;
 
 var opt1 = {
+//      animation: false,
+      datasetFill : false,
+      inGraphDataFontColor : ["#666","black"],
+ 			inGraphDataPaddingX : [5,0],
+			inGraphDataPaddingY : [5,0],
+			inGraphDataAlign: ["left","center"],
+			inGraphDataVAlign: ["bottom","middle"],
       animationStartWithDataset : startWithDataset,
       animationStartWithData : startWithData,
       animationSteps : 200,
@@ -60,12 +64,17 @@ var opt1 = {
       legend : true,
       inGraphDataShow : true,
       annotateDisplay : true,
-      graphTitleFontSize: 18,
-      yAxisRight : true
+      graphTitleFontSize: 18
 
 }
 
 var opt2 = {
+//      animation: false,
+      inGraphDataFontColor : ["#666","black"],
+ 			inGraphDataPaddingX : [5,0],
+			inGraphDataPaddingY : [5,0],
+			inGraphDataAlign: ["left","center"],
+			inGraphDataVAlign: ["bottom","middle"],
       animationStartWithDataset : startWithDataset,
       animationStartWithData : startWithData,
       animationLeftToRight : true,
@@ -78,13 +87,19 @@ var opt2 = {
       legend : true,
       inGraphDataShow : true,
       annotateDisplay : true,
-      graphTitleFontSize: 18,
-      yAxisRight : true
+      graphTitleFontSize: 18
 
 }
 
 var opt3 = {
+//      animation: false,
+      inGraphDataFontColor : ["#666","black"],
+ 			inGraphDataPaddingX : [5,0],
+			inGraphDataPaddingY : [5,0],
+			inGraphDataAlign: ["left","center"],
+			inGraphDataVAlign: ["bottom","middle"],
       animationStartWithDataset : startWithDataset,
+      datasetFill : false,
       animationStartWithData : startWithData,
       animationByDataset : true,
       animationSteps : 200,
@@ -97,12 +112,16 @@ var opt3 = {
       legend : true,
       inGraphDataShow : true,
       annotateDisplay : true,
-      graphTitleFontSize: 18,
-      yAxisRight : true
-
+      graphTitleFontSize: 18
 }
 
 var opt4 = {
+//      animation: false,
+      inGraphDataFontColor : ["#666","black"],
+ 			inGraphDataPaddingX : [5,0],
+			inGraphDataPaddingY : [5,0],
+			inGraphDataAlign: ["left","center"],
+			inGraphDataVAlign: ["bottom","middle"],
       animationStartWithDataset : startWithDataset,
       animationStartWithData : startWithData,
       animationLeftToRight : true,
@@ -116,9 +135,7 @@ var opt4 = {
       legend : true,
       inGraphDataShow : true,
       annotateDisplay : true,
-      graphTitleFontSize: 18,
-      yAxisRight : true
-      
+      graphTitleFontSize: 18
 }
 
 
@@ -144,10 +161,10 @@ var opt4 = {
 window.onload = function() {
 
 
-    var myLine = new Chart(document.getElementById("canvas_Line1").getContext("2d")).Line(mydata1,opt1);
-    var myLine = new Chart(document.getElementById("canvas_Line2").getContext("2d")).Line(mydata1,opt2);
-    var myLine = new Chart(document.getElementById("canvas_Line3").getContext("2d")).Line(mydata1,opt3);
-    var myLine = new Chart(document.getElementById("canvas_Line4").getContext("2d")).Line(mydata1,opt4);
+    var myLine1 = new Chart(document.getElementById("canvas_Line1").getContext("2d")).Bubble(mydata1,opt1);
+    var myLine2 = new Chart(document.getElementById("canvas_Line2").getContext("2d")).Bubble(mydata1,opt2);
+    var myLine3 = new Chart(document.getElementById("canvas_Line3").getContext("2d")).Bubble(mydata1,opt3);
+    var myLine4 = new Chart(document.getElementById("canvas_Line4").getContext("2d")).Bubble(mydata1,opt4);
 }
     </script>
   </body>
