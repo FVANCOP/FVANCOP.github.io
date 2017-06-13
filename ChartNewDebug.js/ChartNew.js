@@ -9064,6 +9064,7 @@ function initPassVariableData_part2(statData, data, config, ctx, logarithm1, log
 				break;
 			case "Line":
 				for (j = 0; j < data.datasets[i].data.length; j++) {
+console.log("IJ:"+i+" "+j);
 					if (j >= mxj) {
 						mxj++;
 						statData[0][0].totExtentJ[j] = 0;
@@ -9130,8 +9131,8 @@ function initPassVariableData_part2(statData, data, config, ctx, logarithm1, log
 					statData[0][0].totExtentJ[j] += statData[i][j].extent;
 					if (j > 0) statData[i][j].cumExtentI = statData[i][j - 1].cumExtentI + statData[i][j - 1].extent;
 					if (i > 0 || j > 0) {
-						if (j == 0) statData[i][j].cumExtent = statData[i - 1][data.datasets[i].data.length - 1].cumExtent;
-						else statData[i][j].cumExtent = statData[i][j - 1].cumExtent
+						if (j == 0) statData[i][j].cumExtent = statData[i - 1][data.datasets[i-1].data.length - 1].cumExtent;
+						else statData[i][j].cumExtent = statData[i][j - 1].cumExtent;
 					}
 				}
 				break;
