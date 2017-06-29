@@ -12,8 +12,8 @@
 
 var charJSPersonnalDefaultOptions = { decimalSeparator : "," , thousandSeparator : ".", roundNumber : "none", graphTitleFontSize: 2 };
 
-defCanvasWidth=800;
-defCanvasHeight=600;
+defCanvasWidth=600;
+defCanvasHeight=400;
 
 var textHPos =4;
 var textVPos =2;
@@ -495,7 +495,13 @@ var fontColor= "blue";
    
   <center>
     <FONT SIZE=6><B>Demo of ChartNew.js !</B></FONT>    <BR>
-  <canvas id="canvas_Line" height="1200" width="1800"></canvas>
+    <script>
+    height=900;
+    if (window.devicePixelRatio>1) {
+      height=height*window.devicePixelRatio;
+    }
+    document.write("<canvas id='canvas_Line' height='"+height+"' width='1300'></canvas>");
+    </script> 
     <script>
   var opts= {animation : false,legend : 
   true,annotateDisplay:true,
